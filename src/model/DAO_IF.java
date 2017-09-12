@@ -18,5 +18,4 @@ public interface DAO_IF {
 	boolean createShift();
 	boolean updateShift();
 	boolean deleteShift();
-
 }
