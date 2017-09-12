@@ -10,9 +10,11 @@ public class DAO implements DAO_IF{
 	public DAO() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
+
 			//TUNNELOI TÄMÄ!
-			myCon = DriverManager.getConnection("jdbc:mysql://localhost/valuutat", "olso", "olso");
+			myCon = DriverManager.getConnection("jdbc:mysql://localhost:3306/vuorot.db", "pena", "pena");
 		} catch (Exception e) {
+			System.err.print(e);
 			System.err.println("Virhe tietokantayhteyden muodostamisessa.");
 			System.exit(-1);
 		}
