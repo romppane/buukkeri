@@ -36,7 +36,7 @@ public class DAO implements DAO_IF{
 	public boolean createSP(SP sp) {
 		PreparedStatement myStatement = null;
 		String query = null;
-		int count = 1;
+		int count = 0;
 		try{
 			query = "insert ignore into Service_Provider values(default,?, ?, ?, ?);";
 			myStatement = myCon.prepareStatement(query);
@@ -48,6 +48,7 @@ public class DAO implements DAO_IF{
 
 
 			System.out.println("aijaa");
+
 	}
 		catch(Exception e) {
 			e.printStackTrace();
