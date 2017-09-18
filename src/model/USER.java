@@ -7,9 +7,9 @@ public class USER {
 	private String lname;
 	private String email;
 	private String phone;
-	
-	
-	
-	
+
+
+
+
 
 }

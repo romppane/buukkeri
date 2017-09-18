@@ -1,5 +1,4 @@
 package model;
-
 public class SP {
 	private int id;
 	private String name;

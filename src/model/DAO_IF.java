@@ -1,5 +1,4 @@
 package model;
-
 public interface DAO_IF {
 	boolean createSP(SP sp);
 	boolean updateSP(SP sp);
