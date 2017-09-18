@@ -4,14 +4,17 @@ import java.util.ArrayList;
 
 
 public class DAO implements DAO_IF{
+	//ASD
 	private Connection myCon;
 
 	public DAO() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
+
 			//TUNNELOI TÄMÄ!
-			myCon = DriverManager.getConnection("jdbc:mysql://localhost/valuutat", "olso", "olso");
-		} catch (Exception e) {
+			myCon = DriverManager.getConnection("jdbc:mysql://localhost:2206/vuorot", "pena", "pena");
+		} catch (Exception dBException) {
+			System.err.print(dBException);
 			System.err.println("Virhe tietokantayhteyden muodostamisessa.");
 			System.exit(-1);
 		}
@@ -35,13 +38,17 @@ public class DAO implements DAO_IF{
 		String query = null;
 		int count = 0;
 		try{
-			query = "insert ignore into Service_Provider values(?, ?, ?, ?);";
+			query = "insert ignore into Service_Provider values(default,?, ?, ?, ?);";
 			myStatement = myCon.prepareStatement(query);
 			myStatement.setString(1, sp.getName());
 			myStatement.setString(2, sp.getPassword());
 			myStatement.setString(3, sp.getEmail());
 			myStatement.setString(4, sp.getPhone());
 			count = myStatement.executeUpdate();
+
+
+			System.out.println("aijaa");
+
 	}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -144,7 +151,7 @@ public class DAO implements DAO_IF{
 				String email = myRs.getString("Email");
 				String phone = myRs.getString("Phone");
 
-				SP sp = new SP(id, name, password, email, phone);
+				SP sp = new SP(name, password, email, phone);
 				providers.add(sp);
 			}
 
@@ -185,7 +192,7 @@ public class DAO implements DAO_IF{
 				String password = myRs.getString("Password");
 				String phone = myRs.getString("Phone");
 
-				provider = new SP(id, name, password, email, phone);
+				provider = new SP(name, password, email, phone);
 		}
 
 		}

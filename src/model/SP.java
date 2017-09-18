@@ -8,7 +8,7 @@ public class SP {
 	private String phone;
 
 
-	public SP(int id, String name, String password, String email, String phone) {
+	public SP(String name, String password, String email, String phone) {
 		this.id = id;
 		this.name = name;
 		this.password = password;
