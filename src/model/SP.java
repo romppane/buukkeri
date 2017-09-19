@@ -1,5 +1,4 @@
 package model;
-public class SP {
 
 public class SP implements SP_IF{
 	private int id;
