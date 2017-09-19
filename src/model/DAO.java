@@ -49,11 +49,9 @@ public class DAO implements DAO_IF{
 
 			System.out.println("aijaa");
 
-	}
-		catch(Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
-		}
-		finally{
+		} finally{
 			try {
 				if (myStatement != null)
 					myStatement.close();
@@ -103,6 +101,7 @@ public class DAO implements DAO_IF{
 			return true;
 		}
 	}
+	
 	@Override
 	public boolean deleteSP(String email) {
 		PreparedStatement myStatement = null;
@@ -113,8 +112,7 @@ public class DAO implements DAO_IF{
 			myStatement = myCon.prepareStatement(query);
 			myStatement.setString(1, email);
 			count = myStatement.executeUpdate();
-	}
-		catch(Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		finally{
@@ -213,11 +211,46 @@ public class DAO implements DAO_IF{
 
 		return provider;
 	}
+	
+
 	@Override
-	public boolean createUser() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean createUser(USER user) {
+		PreparedStatement myStatement = null;
+		String query = null;
+		int count = 0;
+		try{
+			query = "insert ignore into Service_Provider values(default,?, ?, ?, ?);";
+			myStatement = myCon.prepareStatement(query);
+			myStatement.setInt(0, user.getId());
+			myStatement.setString(1, user.getFname());
+			myStatement.setString(2, user.getLname());
+			myStatement.setString(3, user.getPassword());
+			myStatement.setString(4, user.getEmail());
+			myStatement.setString(5, user.getPhone());
+			count = myStatement.executeUpdate();
+
+
+			System.out.println("aijaa");
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		if(count!=1){
+			return false;
+		}
+		else{
+			return true;
+		}
 	}
+
 	@Override
 	public boolean updateUser() {
 		// TODO Auto-generated method stub

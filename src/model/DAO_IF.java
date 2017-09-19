@@ -6,9 +6,6 @@ public interface DAO_IF {
 	boolean deleteSP(String email);
 	SP[] readSPs();
 	SP readSP(String email);
-	boolean createUser();
-	boolean updateUser();
-	boolean deleteUser();
 	boolean createActivity();
 	boolean updateActivity();
 	boolean deleteActivity();
@@ -18,4 +15,7 @@ public interface DAO_IF {
 	boolean createShift();
 	boolean updateShift();
 	boolean deleteShift();
+	boolean createUser(USER user);
+	boolean updateUser();
+	boolean deleteUser();
 }
