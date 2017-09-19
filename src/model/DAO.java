@@ -33,7 +33,7 @@ public class DAO implements DAO_IF{
 
 
 	@Override
-	public boolean createSP(SP sp) {
+	public boolean createSP(SP_IF sp) {
 		PreparedStatement myStatement = null;
 		String query = null;
 		int count = 0;
@@ -71,7 +71,7 @@ public class DAO implements DAO_IF{
 	@Override
 	//RAATO PITÄÄ POHTIA MITÄ KAIKKEA VOI VAIHTAA!!!!!
 	//Vaihtaa salasanaa nyt.
-	public boolean updateSP(SP sp) {
+	public boolean updateSP(SP_IF sp) {
 		PreparedStatement myStatement = null;
 		String query = null;
 		int count = 0;
@@ -101,14 +101,14 @@ public class DAO implements DAO_IF{
 			return true;
 		}
 	}
-	
+
 	@Override
 	public boolean deleteSP(String email) {
 		PreparedStatement myStatement = null;
 		String query = null;
 		int count = 0;
 		try{
-			query = "delete from Service_provider where Email = ?";
+			query = "delete from Service_Provider where Email = ?";
 			myStatement = myCon.prepareStatement(query);
 			myStatement.setString(1, email);
 			count = myStatement.executeUpdate();
@@ -211,7 +211,7 @@ public class DAO implements DAO_IF{
 
 		return provider;
 	}
-	
+
 
 	@Override
 	public boolean createUser(USER user) {
@@ -261,21 +261,7 @@ public class DAO implements DAO_IF{
 		// TODO Auto-generated method stub
 		return false;
 	}
-	@Override
-	public boolean createActivity() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean updateActivity() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean deleteActivity() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
 	@Override
 	public boolean createBooking() {
 		// TODO Auto-generated method stub
@@ -305,6 +291,186 @@ public class DAO implements DAO_IF{
 	public boolean deleteShift() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean createActivity(Activity_IF act) {
+		PreparedStatement myStatement = null;
+		String query = null;
+		int count = 0;
+		try{
+			query = "insert ignore into Activity values(default,?, ?, ?, ?);";
+			myStatement = myCon.prepareStatement(query);
+			myStatement.setString(1, act.getName());
+			myStatement.setInt(2, act.getSp_id());
+			myStatement.setString(3, act.getLocation());
+			myStatement.setString(4, act.getDescription());
+			count = myStatement.executeUpdate();
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		if(count!=1){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+
+	@Override
+	public boolean updateActivity(Activity_IF act) {
+		PreparedStatement myStatement = null;
+		String query = null;
+		int count = 0;
+		try{
+			query = "update Activity set Location = ? where ID = ?";
+			myStatement = myCon.prepareStatement(query);
+			myStatement.setString(1, act.getLocation());
+			myStatement.setInt(2,act.getId());
+			count = myStatement.executeUpdate();
+	}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		if(count!=1){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+
+	@Override
+	public boolean deleteActivity(Activity_IF act) {
+		PreparedStatement myStatement = null;
+		String query = null;
+		int count = 0;
+		try{
+			query = "delete from Activity where ID = ?";
+			myStatement = myCon.prepareStatement(query);
+			myStatement.setInt(1, act.getId());
+			count = myStatement.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		if(count!=1){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+
+	@Override
+	public Activity[] readActivitiesById(int sp_id) {
+		ArrayList<Activity> activities = new ArrayList();
+		PreparedStatement myStatement = null;
+		ResultSet myRs = null;
+
+		try{
+			String sqlSelect = "Select * from Activity where SP_ID = ?";
+			myStatement = myCon.prepareStatement(sqlSelect);
+			myStatement.setInt(1, sp_id);
+			myRs = myStatement.executeQuery();
+
+			while(myRs.next()) {
+				int id = myRs.getInt("ID");
+				String name = myRs.getString("Name");
+				int SP_ID = myRs.getInt("SP_ID");
+				String location = myRs.getString("Location");
+				String description = myRs.getString("Description");
+
+				Activity act = new Activity(id,name,SP_ID,location,description);
+				activities.add(act);
+			}
+
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if (myRs != null)
+					myRs.close();
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+
+		Activity[] palautus = new Activity[activities.size()];
+		return (Activity[])activities.toArray(palautus);
+	}
+
+	@Override
+	public Activity[] readActivities() {
+		ArrayList<Activity> activities = new ArrayList();
+		PreparedStatement myStatement = null;
+		ResultSet myRs = null;
+
+		try{
+			String sqlSelect = "Select * from Activity";
+			myStatement = myCon.prepareStatement(sqlSelect);
+			myRs = myStatement.executeQuery();
+
+			while(myRs.next()) {
+				int id = myRs.getInt("ID");
+				String name = myRs.getString("Name");
+				int sp_id = myRs.getInt("SP_ID");
+				String location = myRs.getString("Location");
+				String description = myRs.getString("Description");
+
+				Activity act = new Activity(id,name,sp_id,location,description);
+				activities.add(act);
+			}
+
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if (myRs != null)
+					myRs.close();
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+
+		Activity[] palautus = new Activity[activities.size()];
+		return (Activity[])activities.toArray(palautus);
 	}
 
 }

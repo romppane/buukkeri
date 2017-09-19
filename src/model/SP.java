@@ -1,12 +1,16 @@
 package model;
 
-public class SP {
+public class SP implements SP_IF{
 	private int id;
 	private String name;
 	private String password;
 	private String email;
 	private String phone;
 
+
+
+	public SP() {
+	}
 
 	public SP(String name, String password, String email, String phone) {
 		this.id = id;
