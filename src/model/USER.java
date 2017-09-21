@@ -1,7 +1,7 @@
 package model;
 
 public class USER {
-	
+
 	private int id;
 	private String password;
 	private String fname;
@@ -10,7 +10,7 @@ public class USER {
 	private String phone;
 
 
-	
+	//Testi commitille
 	public USER(int id, String fname, String lname, String password, String phone, String email) {
 		super();
 		this.id = id;
@@ -56,5 +56,5 @@ public class USER {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 }
