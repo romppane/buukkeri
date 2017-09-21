@@ -1,15 +1,18 @@
 package model;
 
-public class USER {
+public class USER implements USER_IF  {
 	private int id;
 	private String fname;
 	private String lname;
 	private String password;
 	private String phone;
 	private String email;
-	
-	
-	
+
+
+
+	public USER (int i, String fname, String lname, String password, String phone, String email) {
+
+	}
 	public int getId() {
 		return id;
 	}
@@ -46,5 +49,5 @@ public class USER {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 }
