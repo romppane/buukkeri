@@ -149,7 +149,7 @@ public class DAO implements DAO_IF{
 				String email = myRs.getString("Email");
 				String phone = myRs.getString("Phone");
 
-				SP sp = new SP(name, password, email, phone);
+				SP sp = new SP();
 				providers.add(sp);
 			}
 
@@ -190,7 +190,7 @@ public class DAO implements DAO_IF{
 				String password = myRs.getString("Password");
 				String phone = myRs.getString("Phone");
 
-				provider = new SP(name, password, email, phone);
+				provider = new SP();
 		}
 
 		}
