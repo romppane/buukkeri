@@ -12,6 +12,18 @@ public class USER implements USER_IF  {
 
 	public USER (int i, String fname, String lname, String password, String phone, String email) {
 
+
+
+
+
+		super();
+		this.id = id;
+		this.fname = fname;
+		this.lname = lname;
+		this.password = password;
+		this.phone = phone;
+		this.email = email;
+
 	}
 	public int getId() {
 		return id;
