@@ -8,6 +8,7 @@ public class Buukkeri {
 		USER penanasiakas = new USER(0001, "Pertti", "Penanen", "yolo2000", "04077777", "perttip@penamail.com");
 		test.createSP(pena);
 		test.createUser(penanasiakas);
+		//ASDASDassdassd
 
 	}
 
