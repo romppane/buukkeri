@@ -75,7 +75,7 @@ public class DAOtests {
 		Activity[] acts = null;
 
 		act.setName(name);
-		act.setSp_id(spid);
+		//act.setSp_id(spid);
 		act.setDescription(desc);
 		act.setLocation(loc);
 
@@ -95,8 +95,8 @@ public class DAOtests {
 				name, act.getName());
 		assertEquals("readActivityById(): Description is not correct.",
 				desc, act.getDescription());
-		assertEquals("readActivityById(): SP_ID is not correct.",
-				spid, act.getSp_id());
+		/*assertEquals("readActivityById(): SP_ID is not correct.",
+				spid, act.getSp_id());*/
 
 		// Changing password
 		act.setLocation("Asinsaari");

@@ -1,14 +1,24 @@
 package model;
 
+import javax.persistence.*;
 
-
-
+@Entity
+@Table(name="Service_Provider")
 public class SP implements SP_IF{
 
+	@Id
+	@GeneratedValue
+	@Column(name="ID")
 	private int id;
+	
+	@Column(name="Name")
 	private String name;
+	
+	@Column(name="Password")
 	private String password;
+	@Column(name="Email", unique = true)
 	private String email;
+	@Column(name="Phone", unique = true)
 	private String phone;
 
 
@@ -16,7 +26,7 @@ public class SP implements SP_IF{
 	public SP() {
 	}
 
-	public SP(String name, String password, String email, String phone) {
+	public SP(int i,String name, String password, String email, String phone) {
 		this.id = id;
 		this.name = name;
 		this.password = password;
@@ -48,6 +58,11 @@ public class SP implements SP_IF{
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
+	public int getId() {
+		return id;
+	}
+
 
 }
 

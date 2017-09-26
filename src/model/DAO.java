@@ -293,7 +293,7 @@ public class DAO implements DAO_IF{
 		return false;
 	}
 
-	@Override
+	/*@Override
 	public boolean createActivity(Activity_IF act) {
 		PreparedStatement myStatement = null;
 		String query = null;
@@ -324,7 +324,7 @@ public class DAO implements DAO_IF{
 		else{
 			return true;
 		}
-	}
+	}*/
 
 	@Override
 	public boolean updateActivity(Activity_IF act) {
@@ -389,6 +389,24 @@ public class DAO implements DAO_IF{
 	}
 
 	@Override
+	public boolean createActivity(Activity_IF act) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Activity[] readActivitiesById(int sp_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Activity[] readActivities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*@Override
 	public Activity[] readActivitiesById(int sp_id) {
 		ArrayList<Activity> activities = new ArrayList();
 		PreparedStatement myStatement = null;
@@ -429,9 +447,9 @@ public class DAO implements DAO_IF{
 
 		Activity[] palautus = new Activity[activities.size()];
 		return (Activity[])activities.toArray(palautus);
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public Activity[] readActivities() {
 		ArrayList<Activity> activities = new ArrayList();
 		PreparedStatement myStatement = null;
@@ -471,6 +489,6 @@ public class DAO implements DAO_IF{
 
 		Activity[] palautus = new Activity[activities.size()];
 		return (Activity[])activities.toArray(palautus);
-	}
+	}*/
 
 }
