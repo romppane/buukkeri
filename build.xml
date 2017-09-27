@@ -27,7 +27,7 @@
         <fileset dir="${java.home}/lib" includes="*.jar"/>
         <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
     </path>
-    <path id="run.DAOtest.bootclasspath">
+    <path id="run.DAOtestss.bootclasspath">
         <fileset dir="${java.home}/lib" includes="*.jar"/>
         <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
     </path>
@@ -84,15 +84,15 @@
             </bootclasspath>
         </java>
     </target>
-    <target name="DAOtest">
+    <target name="DAOtestss">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
-            <test name="model.DAOtest" todir="${junit.output.dir}"/>
+            <test name="model.DAOtests" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
             <classpath refid="Buukkeri.classpath"/>
             <bootclasspath>
-                <path refid="run.DAOtest.bootclasspath"/>
+                <path refid="run.DAOtestss.bootclasspath"/>
             </bootclasspath>
         </junit>
     </target>
