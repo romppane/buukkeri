@@ -1,29 +1,12 @@
 package model;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name="Account")
 
 public class USER implements USER_IF  {
-	@Id
-	@GeneratedValue
-	@Column(name="ID")
 	private int id;
-
-	@Column(name="Firstname")
 	private String fname;
-
-	@Column(name="Lastname")
 	private String lname;
-
-	@Column(name="Password")
 	private String password;
-
-	@Column(name="Phone", unique = true)
 	private String phone;
-
-	@Column(name="Email", unique = true)
 	private String email;
 
 

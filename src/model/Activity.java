@@ -1,42 +1,21 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
-@Entity
-@Table(name="Activity")
 public class Activity implements Activity_IF{
-    @Id
-    @GeneratedValue
-    @Column(name="ID")
     private int id;
-    @Column(name="Name")
     private String name;
-
-    @ManyToOne
-    @JoinColumn(name="SP_ID")
-    private SP sp;
-
-    @Column(name="Location")
+    private int spid;
     private String location;
-    @Column(name="Description")
     private String description;
-
-
-
 
 
     public Activity() {
     }
-    public Activity(int id, String name, SP sp, String location, String description) {
+
+    public Activity(int id, String name, int spid, String location, String description) {
         this.id = id;
         this.name = name;
-        this.sp = sp;
+        this.spid = spid;
         this.location = location;
         this.description = description;
     }
@@ -52,11 +31,11 @@ public class Activity implements Activity_IF{
     public void setName(String name) {
         this.name = name;
     }
-    public SP getSp() {
-        return sp;
+    public int getSpid() {
+        return spid;
     }
-    public void setSp(SP sp) {
-        this.sp = sp;
+    public void setSpid(int spid) {
+        this.spid = spid;
     }
     public String getLocation() {
         return location;

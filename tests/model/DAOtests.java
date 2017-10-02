@@ -75,7 +75,7 @@ public class DAOtests {
 		Activity[] acts = null;
 
 		act.setName(name);
-		//act.setSp_id(spid);
+		act.setSpid(spid);
 		act.setDescription(desc);
 		act.setLocation(loc);
 

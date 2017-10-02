@@ -14,7 +14,7 @@ public interface SHIFT_IF {
 
 	public void setPrice(float price);
 
-	public Activity getActivity();
+	public int getActivityid();
 
-	public void setActivity(Activity activity);
+	public void setActivityid(int activityid);
 }

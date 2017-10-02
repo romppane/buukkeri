@@ -1,14 +1,9 @@
 package model;
 
-import org.hibernate.*;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-
 public class Buukkeri {
 
 	public static void main(String[] args) {
-		SessionFactory sessionfactory = null;
+		/*SessionFactory sessionfactory = null;
 
 		final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
 		try {
@@ -41,7 +36,7 @@ public class Buukkeri {
 		}
 		finally {
 			session.close();
-		}
+		}*/
 
 
 	}
