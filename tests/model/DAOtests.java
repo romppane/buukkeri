@@ -56,13 +56,14 @@ public class DAOtests {
 
 		// Deleting test user should happen
 		assertTrue("deleteSP(): Removing Service Provider was not successful.",
-				bookerDAO.deleteSP(email));
+				bookerDAO.deleteSP(sp));
 		assertTrue("deleteSP(): Removing Service Provider was not successful - Service Provider was still in database.",
 				bookerDAO.readSP(email) == null);
 
 		// Removing random stuff should fail
+		SP_IF assd = new SP();
 		assertFalse("deleteSP(): Claims to have removed Service Provider which never existed.",
-				bookerDAO.deleteSP("asdflol"));
+				bookerDAO.deleteSP(assd));
 	}
 
 	@Test
@@ -95,8 +96,8 @@ public class DAOtests {
 				name, act.getName());
 		assertEquals("readActivityById(): Description is not correct.",
 				desc, act.getDescription());
-		/*assertEquals("readActivityById(): SP_ID is not correct.",
-				spid, act.getSp_id());*/
+		assertEquals("readActivityById(): SP_ID is not correct.",
+				spid, act.getSpid());
 
 		// Changing password
 		act.setLocation("Asinsaari");

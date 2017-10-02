@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 
 public class DAO implements DAO_IF{
-	//ASD
+
 	private Connection myCon;
 
 	public DAO() {
@@ -32,6 +32,7 @@ public class DAO implements DAO_IF{
 	}
 
 
+	//Creates Service Provider to db.
 	@Override
 	public boolean createSP(SP_IF sp) {
 		PreparedStatement myStatement = null;
@@ -45,9 +46,7 @@ public class DAO implements DAO_IF{
 			myStatement.setString(3, sp.getEmail());
 			myStatement.setString(4, sp.getPhone());
 			count = myStatement.executeUpdate();
-
-
-			System.out.println("aijaa");
+			System.out.println("SP has been created");
 
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -67,10 +66,8 @@ public class DAO implements DAO_IF{
 			return true;
 		}
 	}
-
+	//Changes Service Provider password.
 	@Override
-	//RAATO PITÄÄ POHTIA MITÄ KAIKKEA VOI VAIHTAA!!!!!
-	//Vaihtaa salasanaa nyt.
 	public boolean updateSP(SP_IF sp) {
 		PreparedStatement myStatement = null;
 		String query = null;
@@ -101,16 +98,16 @@ public class DAO implements DAO_IF{
 			return true;
 		}
 	}
-
+	//Deletes Service Provider from db.
 	@Override
-	public boolean deleteSP(String email) {
+	public boolean deleteSP(SP_IF sp) {
 		PreparedStatement myStatement = null;
 		String query = null;
 		int count = 0;
 		try{
 			query = "delete from Service_Provider where Email = ?";
 			myStatement = myCon.prepareStatement(query);
-			myStatement.setString(1, email);
+			myStatement.setString(1, sp.getEmail());
 			count = myStatement.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -131,6 +128,7 @@ public class DAO implements DAO_IF{
 			return true;
 		}
 	}
+	//Returns all Service Providers
 	@Override
 	public SP[] readSPs() {
 		ArrayList<SP> providers = new ArrayList();
@@ -172,6 +170,7 @@ public class DAO implements DAO_IF{
 		SP[] palautus = new SP[providers.size()];
 		return (SP[])providers.toArray(palautus);
 	}
+	//Returns Service Provider by email
 	@Override
 	public SP readSP(String email) {
 		SP provider = null;
@@ -212,10 +211,9 @@ public class DAO implements DAO_IF{
 
 		return provider;
 	}
-
-
+	//Creates User to db.
 	@Override
-	public boolean createUser(USER user) {
+	public boolean createUser(USER_IF user) {
 		PreparedStatement myStatement = null;
 		String query = null;
 		int count = 0;
@@ -229,9 +227,6 @@ public class DAO implements DAO_IF{
 			myStatement.setString(4, user.getEmail());
 			myStatement.setString(5, user.getPhone());
 			count = myStatement.executeUpdate();
-
-
-			System.out.println("aijaa");
 
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -251,49 +246,233 @@ public class DAO implements DAO_IF{
 			return true;
 		}
 	}
+	//Changes password for User.
+	@Override
+	public boolean updateUser(USER_IF user) {
+		PreparedStatement myStatement = null;
+		String query = null;
+		int count = 0;
+		try{
+			query = "update Account set Password = ? where Email = ?";
+			myStatement = myCon.prepareStatement(query);
+			myStatement.setString(1, user.getPassword());
+			myStatement.setString(2, user.getEmail());
+			count = myStatement.executeUpdate();
+	}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		if(count!=1){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+	//Deletes User for Password Email pair.
+	@Override
+	public boolean deleteUser(USER_IF user) {
+		PreparedStatement myStatement = null;
+		String query = null;
+		int count = 0;
+		try{
+			query = "delete from Account where Email = ? AND Password = ?";
+			myStatement = myCon.prepareStatement(query);
+			myStatement.setString(1, user.getEmail());
+			myStatement.setString(2, user.getPassword());
+			count = myStatement.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		if(count!=1){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+	//Creates Booking to db
+	@Override
+	public boolean createBooking(Booking_IF bk) {
+		PreparedStatement myStatement = null;
+		String query = null;
+		int count = 0;
+		try{
+			query = "insert into Booking values(?,?);";
+			myStatement = myCon.prepareStatement(query);
+			myStatement.setInt(1, bk.getUserid());
+			myStatement.setInt(2, bk.getShiftid());
+			count = myStatement.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		if(count!=1){
+			return false;
+		}
+		else{
+			return true;
+		}
 
+	}
+	//Switches shift to another shift
 	@Override
-	public boolean updateUser() {
+	public boolean updateBooking(SHIFT_IF shift, Booking_IF bk) {
+		PreparedStatement myStatement = null;
+		String query = null;
+		int count = 0;
+		try{
+			query = "update Shift set Shift_ID = ? where User_ID = ? AND Shift_ID = ?";
+			myStatement = myCon.prepareStatement(query);
+			myStatement.setInt(1, shift.getId());
+			myStatement.setInt(2, bk.getUserid());
+			myStatement.setInt(3, bk.getShiftid());
+			count = myStatement.executeUpdate();
+	}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		if(count!=1){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+	//Deletes Booking from db
+	@Override
+	public boolean deleteBooking(Booking_IF bk) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	//Creates a shift to db.
 	@Override
-	public boolean deleteUser() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean createShift(SHIFT_IF shift) {
+		PreparedStatement myStatement = null;
+		String query = null;
+		int count = 0;
+		try{
+			query = "insert ignore into Shift values(default, ?, ?, ?);";
+			myStatement = myCon.prepareStatement(query);
+			myStatement.setString(1, shift.getShift_time());
+			myStatement.setFloat(2, shift.getPrice());
+			myStatement.setInt(2, shift.getActivityid());
+			count = myStatement.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		if(count!=1){
+			return false;
+		}
+		else{
+			return true;
+		}
 	}
-
+	//Sets a price for a shift
 	@Override
-	public boolean createBooking() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean updateShift(SHIFT_IF shift) {
+		PreparedStatement myStatement = null;
+		String query = null;
+		int count = 0;
+		try{
+			query = "update Shift set Price = ? where ID = ?";
+			myStatement = myCon.prepareStatement(query);
+			myStatement.setFloat(1, shift.getPrice());
+			myStatement.setInt(2, shift.getId());
+			count = myStatement.executeUpdate();
 	}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		if(count!=1){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+	//Deletes a shift.
 	@Override
-	public boolean updateBooking() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteShift(SHIFT_IF shift) {
+		PreparedStatement myStatement = null;
+		String query = null;
+		int count = 0;
+		try{
+			query = "delete from Shift where ID = ?";
+			myStatement = myCon.prepareStatement(query);
+			myStatement.setInt(1, shift.getId());
+			count = myStatement.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		if(count!=1){
+			return false;
+		}
+		else{
+			return true;
+		}
 	}
-	@Override
-	public boolean deleteBooking() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean createShift() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean updateShift() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean deleteShift() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	//Creates Activity
 	@Override
 	public boolean createActivity(Activity_IF act) {
 		PreparedStatement myStatement = null;
@@ -326,7 +505,7 @@ public class DAO implements DAO_IF{
 			return true;
 		}
 	}
-
+	//Sets location for activity
 	@Override
 	public boolean updateActivity(Activity_IF act) {
 		PreparedStatement myStatement = null;
@@ -358,7 +537,7 @@ public class DAO implements DAO_IF{
 			return true;
 		}
 	}
-
+	//Deletes activity by ID
 	@Override
 	public boolean deleteActivity(Activity_IF act) {
 		PreparedStatement myStatement = null;
@@ -388,7 +567,7 @@ public class DAO implements DAO_IF{
 			return true;
 		}
 	}
-
+	//Returns all activities by spID.
 	@Override
 	public Activity[] readActivitiesById(int sp_id) {
 		ArrayList<Activity> activities = new ArrayList();
@@ -431,7 +610,7 @@ public class DAO implements DAO_IF{
 		Activity[] palautus = new Activity[activities.size()];
 		return (Activity[])activities.toArray(palautus);
 	}
-
+	
 	@Override
 	public Activity[] readActivities() {
 		ArrayList<Activity> activities = new ArrayList();
