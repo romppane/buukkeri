@@ -1,7 +1,7 @@
 package model;
 
 
-public class USER implements USER_IF  {
+public class User implements User_IF  {
 	private int id;
 	private String fname;
 	private String lname;
@@ -10,11 +10,11 @@ public class USER implements USER_IF  {
 	private String email;
 
 
-	public USER() {
+	public User() {
 
 	}
 
-	public USER (int i, String fname, String lname, String password, String phone, String email) {
+	public User (int i, String fname, String lname, String password, String phone, String email) {
 		this.id = id;
 		this.fname = fname;
 		this.lname = lname;

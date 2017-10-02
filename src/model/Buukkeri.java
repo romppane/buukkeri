@@ -22,7 +22,7 @@ public class Buukkeri {
 
 		try {
 			transaction = session.beginTransaction();
-			USER penanasiakas = new USER(0, "Pertti", "Penanen", "yolo2000", "0401227779", "asdfs@penamail.com");
+			User penanasiakas = new User(0, "Pertti", "Penanen", "yolo2000", "0401227779", "asdfs@penamail.com");
 			SP sp = new SP(0, "Sports Club", "asdlolwtf", "sportss.clubb@email.com", "3324245555");
 			Activity act = new Activity(0, "open footballfield", sp, "Helsinki", "Fun time for anyone");
 			session.saveOrUpdate(penanasiakas);

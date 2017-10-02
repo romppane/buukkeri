@@ -1,6 +1,6 @@
 package model;
 
-public interface USER_IF {
+public interface User_IF {
 	public int getId();
 	public void setId(int id);
 	public String getFname();

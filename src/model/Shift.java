@@ -1,12 +1,12 @@
 package model;
 
-public class SHIFT implements SHIFT_IF {
+public class Shift implements Shift_IF {
 	private int id;
 	private String Shift_time;
 	private float price;
 	private int activityid;
 
-	public SHIFT(int id, String shift_time, float price, int activityid) {
+	public Shift(int id, String shift_time, float price, int activityid) {
 		this.id = id;
 		this.Shift_time = shift_time;
 		this.price = price;

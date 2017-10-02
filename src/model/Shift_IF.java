@@ -1,6 +1,6 @@
 package model;
 
-public interface SHIFT_IF {
+public interface Shift_IF {
 
 	public int getId();
 

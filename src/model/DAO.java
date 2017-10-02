@@ -213,7 +213,7 @@ public class DAO implements DAO_IF{
 	}
 	//Creates User to db.
 	@Override
-	public boolean createUser(USER_IF user) {
+	public boolean createUser(User_IF user) {
 		PreparedStatement myStatement = null;
 		String query = null;
 		int count = 0;
@@ -248,7 +248,7 @@ public class DAO implements DAO_IF{
 	}
 	//Changes password for User.
 	@Override
-	public boolean updateUser(USER_IF user) {
+	public boolean updateUser(User_IF user) {
 		PreparedStatement myStatement = null;
 		String query = null;
 		int count = 0;
@@ -280,7 +280,7 @@ public class DAO implements DAO_IF{
 	}
 	//Deletes User for Password Email pair.
 	@Override
-	public boolean deleteUser(USER_IF user) {
+	public boolean deleteUser(User_IF user) {
 		PreparedStatement myStatement = null;
 		String query = null;
 		int count = 0;
@@ -342,7 +342,7 @@ public class DAO implements DAO_IF{
 	}
 	//Switches shift to another shift
 	@Override
-	public boolean updateBooking(SHIFT_IF shift, Booking_IF bk) {
+	public boolean updateBooking(Shift_IF shift, Booking_IF bk) {
 		PreparedStatement myStatement = null;
 		String query = null;
 		int count = 0;
@@ -381,7 +381,7 @@ public class DAO implements DAO_IF{
 	}
 	//Creates a shift to db.
 	@Override
-	public boolean createShift(SHIFT_IF shift) {
+	public boolean createShift(Shift_IF shift) {
 		PreparedStatement myStatement = null;
 		String query = null;
 		int count = 0;
@@ -412,7 +412,7 @@ public class DAO implements DAO_IF{
 	}
 	//Sets a price for a shift
 	@Override
-	public boolean updateShift(SHIFT_IF shift) {
+	public boolean updateShift(Shift_IF shift) {
 		PreparedStatement myStatement = null;
 		String query = null;
 		int count = 0;
@@ -444,7 +444,7 @@ public class DAO implements DAO_IF{
 	}
 	//Deletes a shift.
 	@Override
-	public boolean deleteShift(SHIFT_IF shift) {
+	public boolean deleteShift(Shift_IF shift) {
 		PreparedStatement myStatement = null;
 		String query = null;
 		int count = 0;
@@ -610,7 +610,7 @@ public class DAO implements DAO_IF{
 		Activity[] palautus = new Activity[activities.size()];
 		return (Activity[])activities.toArray(palautus);
 	}
-	
+	//Returns all activities
 	@Override
 	public Activity[] readActivities() {
 		ArrayList<Activity> activities = new ArrayList();
@@ -651,6 +651,98 @@ public class DAO implements DAO_IF{
 
 		Activity[] palautus = new Activity[activities.size()];
 		return (Activity[])activities.toArray(palautus);
+	}
+
+	//Returns all bookings for a specific user.
+	@Override
+	public Booking[] readBookingsByUserId(int user_id) {
+		ArrayList<Booking> bookings = new ArrayList();
+		PreparedStatement myStatement = null;
+		ResultSet myRs = null;
+
+		try{
+			String sqlSelect = "Select * from Booking where User_ID = ?";
+			myStatement = myCon.prepareStatement(sqlSelect);
+			myStatement.setInt(1, user_id);
+			myRs = myStatement.executeQuery();
+
+			while(myRs.next()) {
+				int shiftid = myRs.getInt("Shift_ID");
+				int userid = myRs.getInt("User_ID");
+
+				Booking booking = new Booking(shiftid, userid);
+				bookings.add(booking);
+			}
+
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if (myRs != null)
+					myRs.close();
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+
+		Booking[] ret = new Booking[bookings.size()];
+		return (Booking[])bookings.toArray(ret);
+	}
+	//Returns all bookings for a specific activity.
+	//Kun tarkistetaan vuorojen availibilityä täytyy vertailla, shift id:tä ja katsoa onko varauksia tehty.
+	//TYNKÄ
+
+	@Override
+	public Booking[] readBookingsByShiftId(int shift_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	//Returns all shifts for activity.
+
+	@Override
+	public Shift[] readActivityShifts(int act_id) {
+		ArrayList<Shift> shifts = new ArrayList();
+		PreparedStatement myStatement = null;
+		ResultSet myRs = null;
+
+		try{
+			String sqlSelect = "Select * from Shift";
+			myStatement = myCon.prepareStatement(sqlSelect);
+			myRs = myStatement.executeQuery();
+
+			while(myRs.next()) {
+				int id = myRs.getInt("ID");
+				int activityid = myRs.getInt("Activity_ID");
+				float price = myRs.getFloat("Price");
+				String stime = myRs.getString("Shift_Time");
+
+				Shift shift = new Shift(id, stime, price, activityid);
+				shifts.add(shift);
+			}
+
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if (myRs != null)
+					myRs.close();
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+
+		Shift[] ret = new Shift[shifts.size()];
+		return (Shift[])shifts.toArray(ret);
 	}
 
 }
