@@ -10,9 +10,9 @@ public interface Shift_IF {
 
 	public void setShift_time(String shift_time);
 
-	public float getPrice();
+	public double getPrice();
 
-	public void setPrice(float price);
+	public void setPrice(double price);
 
 	public int getActivityid();
 

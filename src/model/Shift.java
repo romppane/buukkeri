@@ -3,10 +3,21 @@ package model;
 public class Shift implements Shift_IF {
 	private int id;
 	private String Shift_time;
-	private float price;
+	private double price;
 	private int activityid;
 
-	public Shift(int id, String shift_time, float price, int activityid) {
+
+	public Shift() {
+
+	}
+
+	public Shift(String shift_time, double price, int activityid) {
+		this.Shift_time = shift_time;
+		this.price = price;
+		this.activityid = activityid;
+	}
+
+	public Shift(int id, String shift_time, double price, int activityid) {
 		this.id = id;
 		this.Shift_time = shift_time;
 		this.price = price;
@@ -29,11 +40,11 @@ public class Shift implements Shift_IF {
 		Shift_time = shift_time;
 	}
 
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 

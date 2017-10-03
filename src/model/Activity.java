@@ -12,6 +12,13 @@ public class Activity implements Activity_IF{
     public Activity() {
     }
 
+    public Activity(String name, int spid, String location, String description) {
+        this.name = name;
+        this.spid = spid;
+        this.location = location;
+        this.description = description;
+    }
+
     public Activity(int id, String name, int spid, String location, String description) {
         this.id = id;
         this.name = name;

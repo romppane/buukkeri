@@ -18,4 +18,6 @@ public interface SP_IF {
 
 	void setPhone(String phone);
 
+	int getId();
+
 }

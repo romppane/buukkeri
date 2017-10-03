@@ -23,4 +23,5 @@ public interface DAO_IF {
 	boolean createUser(User_IF user);
 	boolean updateUser(User_IF user);
 	boolean deleteUser(User_IF user);
+	User readUser(String email);
 }

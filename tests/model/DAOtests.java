@@ -12,6 +12,7 @@ public class DAOtests {
 	private DAO_IF bookerDAO = new DAO();
 	private Activity_IF act = new Activity();
 	private SP_IF sp = new SP();
+	private User user = new User();
 
 
 	@Test
@@ -120,6 +121,124 @@ public class DAOtests {
 		Activity_IF random = new Activity();
 		assertFalse("deleteSP(): Claims to have removed Service Provider which never existed.",
 				bookerDAO.deleteActivity(random));
+
+	}
+
+	@Test
+	public void testUserDAO() {
+
+		String fname = "Tester";
+		String lname = "Test";
+		String password = "VilleIsSick";
+		String email = "ville@home.com";
+		String phone = "000-7777777";
+
+		user.setEmail(email);
+		user.setFname(fname);
+		user.setLname(lname);
+		user.setPassword(password);
+		user.setPhone(phone);
+
+		// Add User
+		assertTrue("createUser(): Adding new User was not successful.",
+				bookerDAO.createUser(user));
+		assertFalse("createUser(): Adding duplicate User is possible.",
+				bookerDAO.createUser(user));
+
+		// Users fields should be correct
+		assertTrue("readUser(): reading testuser data could not be done",
+				(user = bookerDAO.readUser(email)) != null);
+		assertEquals("readUser(): Email is not correct.",
+				email, user.getEmail());
+		assertEquals("readUser(): Firstname is not correct.",
+				fname, user.getFname());
+		assertEquals("readUser(): Lastname is not correct.",
+				lname, user.getLname());
+		assertEquals("readUser(): Phone number is not correct.",
+				phone, user.getPhone());
+		assertEquals("readUser(): Password is not correct.",
+				password, user.getPassword());
+
+		// Changing password
+		user.setPassword("Al0n3 in sch-o-ol");
+		assertTrue("updateUser(): Changing password on test user was not successful.",
+				bookerDAO.updateUser(user));
+		user = bookerDAO.readUser(email);
+		assertEquals("updateUser(): Password is not correct.",
+				"Al0n3 in sch-o-ol", user.getPassword());
+
+
+		// Deleting test user should happen
+		assertTrue("deleteUser(): Removing User was not successful.",
+				bookerDAO.deleteUser(user));
+		assertTrue("deleteUser(): Removing User was not successful - User was still in database.",
+				bookerDAO.readUser(email) == null);
+
+		// Removing random stuff should fail
+		User_IF assd = new User();
+		assertFalse("deleteUser(): Claims to have removed User which never existed.",
+				bookerDAO.deleteUser(assd));
+	}
+
+	@Test
+	public void testShifts() {
+		SP_IF ser = new SP("Tommi Testing Corporation", "abcdkissawalking", "abc@dfg.com", "0201987868");
+		bookerDAO.createSP(ser);
+		ser = bookerDAO.readSP(ser.getEmail());
+		Activity_IF act = new Activity("Test Activity", ser.getId(), "Test City", "Tommi is sleeping");
+		bookerDAO.createActivity(act);
+		Activity[] acts = bookerDAO.readActivitiesById(ser.getId());
+		act = acts[0];
+		Shift_IF shift = new Shift();
+		String time = "09:00 - 10:00";
+		double price = 20.00;
+		int actid = act.getId();
+		shift.setActivityid(actid);
+		shift.setPrice(price);
+		shift.setShift_time(time);
+		Shift_IF second = new Shift("10:00 - 11:00", (float)20.00, act.getId());
+		Shift[] shifts = null;
+		// Add Shift
+		assertTrue("createShift(): Adding new shift was not successful.",
+				bookerDAO.createShift(shift));
+		assertTrue("createShift(): Adding second new shift on same provider was not successful.",
+				bookerDAO.createShift(second));
+
+		// Values of Shift should be correct
+		assertTrue("readActivityShifts(): reading test data could not be done",
+				(shifts = bookerDAO.readActivityShifts(act.getId())) != null);
+		shift = shifts[0];
+		assertEquals("readActivityShifts(): Price is not correct.",
+				price, shift.getPrice(), 0.000001);
+		System.out.println(time);
+		System.out.println(shift.getShift_time());
+		assertEquals("readActivityShifts(): Shift time is not correct.",
+				time, shift.getShift_time());
+		assertEquals("readActivityShifts(): Activity id is not correct.",
+				actid, shift.getActivityid());
+
+		// Changing price of Shift
+				shift.setPrice(30.00);
+				assertTrue("updateShift(): Changing price on test shift was not successful.",
+						bookerDAO.updateShift(shift));
+				shifts = bookerDAO.readActivityShifts(act.getId());
+				shift = shifts[0];
+				assertEquals("updateShift(): Price is not correct.",
+						30.00, shift.getPrice(), 0.0000001);
+
+
+				// Deleting test user should happen
+				assertTrue("deleteShift(): Removing Shift was not successful.",
+						bookerDAO.deleteShift(shifts[0]));
+				assertTrue("deleteShift(): Removing Shift was not successful.",
+						bookerDAO.deleteShift(shifts[1]));
+				Shift[] rest = bookerDAO.readActivityShifts(act.getId());
+				assertTrue("deleteUser(): Removing Shifts was not successful - atleast one Shift was still in database.",
+						rest.length == 0);
+
+				bookerDAO.deleteActivity(act);
+				bookerDAO.deleteSP(ser);
+
 
 	}
 }

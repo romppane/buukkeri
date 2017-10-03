@@ -218,9 +218,8 @@ public class DAO implements DAO_IF{
 		String query = null;
 		int count = 0;
 		try{
-			query = "insert ignore into Service_Provider values(default,?, ?, ?, ?);";
+			query = "insert ignore into Account values(default,?, ?, ?, ?, ?);";
 			myStatement = myCon.prepareStatement(query);
-			myStatement.setInt(0, user.getId());
 			myStatement.setString(1, user.getFname());
 			myStatement.setString(2, user.getLname());
 			myStatement.setString(3, user.getPassword());
@@ -374,6 +373,7 @@ public class DAO implements DAO_IF{
 		}
 	}
 	//Deletes Booking from db
+	//NOT DONE
 	@Override
 	public boolean deleteBooking(Booking_IF bk) {
 		// TODO Auto-generated method stub
@@ -388,9 +388,9 @@ public class DAO implements DAO_IF{
 		try{
 			query = "insert ignore into Shift values(default, ?, ?, ?);";
 			myStatement = myCon.prepareStatement(query);
-			myStatement.setString(1, shift.getShift_time());
-			myStatement.setFloat(2, shift.getPrice());
-			myStatement.setInt(2, shift.getActivityid());
+			myStatement.setString(2, shift.getShift_time());
+			myStatement.setDouble(3, shift.getPrice());
+			myStatement.setInt(1, shift.getActivityid());
 			count = myStatement.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -419,7 +419,7 @@ public class DAO implements DAO_IF{
 		try{
 			query = "update Shift set Price = ? where ID = ?";
 			myStatement = myCon.prepareStatement(query);
-			myStatement.setFloat(1, shift.getPrice());
+			myStatement.setDouble(1, shift.getPrice());
 			myStatement.setInt(2, shift.getId());
 			count = myStatement.executeUpdate();
 	}
@@ -743,6 +743,48 @@ public class DAO implements DAO_IF{
 
 		Shift[] ret = new Shift[shifts.size()];
 		return (Shift[])shifts.toArray(ret);
+	}
+
+	@Override
+	public User readUser(String email) {
+		User user = null;
+		PreparedStatement myStatement = null;
+		ResultSet myRs = null;
+
+		try{
+			String sqlSelect = "Select * from Account where Email = ?";
+			myStatement = myCon.prepareStatement(sqlSelect);
+			myStatement.setString(1, email);
+			myRs = myStatement.executeQuery();
+
+			if(myRs.next()) {
+				int id = myRs.getInt("ID");
+				String fname = myRs.getString("Firstname");
+				String lname = myRs.getString("Lastname");
+				String pw = myRs.getString("Password");
+				String Email = myRs.getString("Email");
+				String phone = myRs.getString("Phone");
+
+				user = new User(id, fname, lname, pw, phone, Email);
+		}
+
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if (myRs != null)
+					myRs.close();
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+
+		return user;
 	}
 
 }

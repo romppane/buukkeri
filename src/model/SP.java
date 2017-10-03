@@ -13,7 +13,14 @@ public class SP implements SP_IF{
 	public SP() {
 	}
 
-	public SP(int i,String name, String password, String email, String phone) {
+	public SP(String name, String password, String email, String phone) {
+		this.name = name;
+		this.password = password;
+		this.email = email;
+		this.phone = phone;
+	}
+
+	public SP(int id,String name, String password, String email, String phone) {
 		this.id = id;
 		this.name = name;
 		this.password = password;
