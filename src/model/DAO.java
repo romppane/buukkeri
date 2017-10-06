@@ -130,7 +130,7 @@ public class DAO implements DAO_IF{
 	}
 	//Returns all Service Providers
 	@Override
-	public SP[] readSPs() {
+	public SP_IF[] readSPs() {
 		ArrayList<SP> providers = new ArrayList();
 		PreparedStatement myStatement = null;
 		ResultSet myRs = null;
@@ -167,13 +167,13 @@ public class DAO implements DAO_IF{
 			}
 		}
 
-		SP[] palautus = new SP[providers.size()];
-		return (SP[])providers.toArray(palautus);
+		SP_IF[] palautus = new SP[providers.size()];
+		return (SP_IF[])providers.toArray(palautus);
 	}
 	//Returns Service Provider by email
 	@Override
-	public SP readSP(String email) {
-		SP provider = null;
+	public SP_IF readSP(String email) {
+		SP_IF provider = null;
 		PreparedStatement myStatement = null;
 		ResultSet myRs = null;
 
@@ -569,8 +569,8 @@ public class DAO implements DAO_IF{
 	}
 	//Returns all activities by spID.
 	@Override
-	public Activity[] readActivitiesById(int sp_id) {
-		ArrayList<Activity> activities = new ArrayList();
+	public Activity_IF[] readActivitiesById(int sp_id) {
+		ArrayList<Activity_IF> activities = new ArrayList();
 		PreparedStatement myStatement = null;
 		ResultSet myRs = null;
 
@@ -587,7 +587,7 @@ public class DAO implements DAO_IF{
 				String location = myRs.getString("Location");
 				String description = myRs.getString("Description");
 
-				Activity act = new Activity(id,name,SP_ID,location,description);
+				Activity_IF act = new Activity(id,name,SP_ID,location,description);
 				activities.add(act);
 			}
 
@@ -607,13 +607,13 @@ public class DAO implements DAO_IF{
 			}
 		}
 
-		Activity[] palautus = new Activity[activities.size()];
-		return (Activity[])activities.toArray(palautus);
+		Activity_IF[] palautus = new Activity[activities.size()];
+		return (Activity_IF[])activities.toArray(palautus);
 	}
 	//Returns all activities
 	@Override
-	public Activity[] readActivities() {
-		ArrayList<Activity> activities = new ArrayList();
+	public Activity_IF[] readActivities() {
+		ArrayList<Activity_IF> activities = new ArrayList();
 		PreparedStatement myStatement = null;
 		ResultSet myRs = null;
 
@@ -629,7 +629,7 @@ public class DAO implements DAO_IF{
 				String location = myRs.getString("Location");
 				String description = myRs.getString("Description");
 
-				Activity act = new Activity(id,name,sp_id,location,description);
+				Activity_IF act = new Activity(id,name,sp_id,location,description);
 				activities.add(act);
 			}
 
@@ -649,14 +649,14 @@ public class DAO implements DAO_IF{
 			}
 		}
 
-		Activity[] palautus = new Activity[activities.size()];
-		return (Activity[])activities.toArray(palautus);
+		Activity_IF[] palautus = new Activity[activities.size()];
+		return (Activity_IF[])activities.toArray(palautus);
 	}
 
 	//Returns all bookings for a specific user.
 	@Override
-	public Booking[] readBookingsByUserId(int user_id) {
-		ArrayList<Booking> bookings = new ArrayList();
+	public Booking_IF[] readBookingsByUserId(int user_id) {
+		ArrayList<Booking_IF> bookings = new ArrayList();
 		PreparedStatement myStatement = null;
 		ResultSet myRs = null;
 
@@ -690,8 +690,8 @@ public class DAO implements DAO_IF{
 			}
 		}
 
-		Booking[] ret = new Booking[bookings.size()];
-		return (Booking[])bookings.toArray(ret);
+		Booking_IF[] ret = new Booking[bookings.size()];
+		return (Booking_IF[])bookings.toArray(ret);
 	}
 	//Returns all bookings for a specific activity.
 	//Kun tarkistetaan vuorojen availibilityä täytyy vertailla, shift id:tä ja katsoa onko varauksia tehty.
@@ -705,14 +705,15 @@ public class DAO implements DAO_IF{
 	//Returns all shifts for activity.
 
 	@Override
-	public Shift[] readActivityShifts(int act_id) {
-		ArrayList<Shift> shifts = new ArrayList();
+	public Shift_IF[] readActivityShifts(int act_id) {
+		ArrayList<Shift_IF> shifts = new ArrayList();
 		PreparedStatement myStatement = null;
 		ResultSet myRs = null;
 
 		try{
-			String sqlSelect = "Select * from Shift";
+			String sqlSelect = "Select * from Shift where Activity_ID = ?";
 			myStatement = myCon.prepareStatement(sqlSelect);
+			myStatement.setInt(1, act_id);
 			myRs = myStatement.executeQuery();
 
 			while(myRs.next()) {
@@ -721,7 +722,7 @@ public class DAO implements DAO_IF{
 				float price = myRs.getFloat("Price");
 				String stime = myRs.getString("Shift_Time");
 
-				Shift shift = new Shift(id, stime, price, activityid);
+				Shift_IF shift = new Shift(id, stime, price, activityid);
 				shifts.add(shift);
 			}
 
@@ -741,13 +742,13 @@ public class DAO implements DAO_IF{
 			}
 		}
 
-		Shift[] ret = new Shift[shifts.size()];
-		return (Shift[])shifts.toArray(ret);
+		Shift_IF[] ret = new Shift[shifts.size()];
+		return (Shift_IF[])shifts.toArray(ret);
 	}
 
 	@Override
-	public User readUser(String email) {
-		User user = null;
+	public User_IF readUser(String email) {
+		User_IF user = null;
 		PreparedStatement myStatement = null;
 		ResultSet myRs = null;
 

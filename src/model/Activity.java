@@ -7,6 +7,8 @@ public class Activity implements Activity_IF{
     private int spid;
     private String location;
     private String description;
+    
+    private Shift_IF[] shifts;
 
 
     public Activity() {

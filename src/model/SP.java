@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class SP implements SP_IF{
 
 	private int id;
@@ -7,7 +9,10 @@ public class SP implements SP_IF{
 	private String password;
 	private String email;
 	private String phone;
+	private DAO_IF dao;
 
+	private Activity_IF[] activities;
+	private ArrayList<Shift_IF[]> providershifts;
 
 
 	public SP() {
@@ -26,6 +31,17 @@ public class SP implements SP_IF{
 		this.password = password;
 		this.email = email;
 		this.phone = phone;
+	}
+
+
+
+	public SP(int id, String name, String password, String email, String phone, DAO_IF dao) {
+		this.id = id;
+		this.name = name;
+		this.password = password;
+		this.email = email;
+		this.phone = phone;
+		this.dao = dao;
 	}
 
 	public String getName() {
@@ -55,6 +71,17 @@ public class SP implements SP_IF{
 
 	public int getId() {
 		return id;
+	}
+
+	public void fillActivities() {
+		activities = dao.readActivitiesById(id);
+	}
+
+	public void fillShifts() {
+		providershifts = new ArrayList<>();
+		for(int i = 0; i < activities.length; i++) {
+			providershifts.add(dao.readActivityShifts(activities[i].getId()));
+		}
 	}
 
 

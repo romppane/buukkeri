@@ -12,7 +12,7 @@ public class DAOtests {
 	private DAO_IF bookerDAO = new DAO();
 	private Activity_IF act = new Activity();
 	private SP_IF sp = new SP();
-	private User user = new User();
+	private User_IF user = new User();
 
 
 	@Test
@@ -74,7 +74,7 @@ public class DAOtests {
 		int spid = 1;
 		String loc = "Perillisensaari";
 		String desc = "Saunaa";
-		Activity[] acts = null;
+		Activity_IF[] acts = null;
 
 		act.setName(name);
 		act.setSpid(spid);
@@ -187,7 +187,7 @@ public class DAOtests {
 		ser = bookerDAO.readSP(ser.getEmail());
 		Activity_IF act = new Activity("Test Activity", ser.getId(), "Test City", "Tommi is sleeping");
 		bookerDAO.createActivity(act);
-		Activity[] acts = bookerDAO.readActivitiesById(ser.getId());
+		Activity_IF[] acts = bookerDAO.readActivitiesById(ser.getId());
 		act = acts[0];
 		Shift_IF shift = new Shift();
 		String time = "09:00 - 10:00";
@@ -197,7 +197,7 @@ public class DAOtests {
 		shift.setPrice(price);
 		shift.setShift_time(time);
 		Shift_IF second = new Shift("10:00 - 11:00", (float)20.00, act.getId());
-		Shift[] shifts = null;
+		Shift_IF[] shifts = null;
 		// Add Shift
 		assertTrue("createShift(): Adding new shift was not successful.",
 				bookerDAO.createShift(shift));
@@ -232,7 +232,7 @@ public class DAOtests {
 						bookerDAO.deleteShift(shifts[0]));
 				assertTrue("deleteShift(): Removing Shift was not successful.",
 						bookerDAO.deleteShift(shifts[1]));
-				Shift[] rest = bookerDAO.readActivityShifts(act.getId());
+				Shift_IF[] rest = bookerDAO.readActivityShifts(act.getId());
 				assertTrue("deleteUser(): Removing Shifts was not successful - atleast one Shift was still in database.",
 						rest.length == 0);
 

@@ -8,6 +8,9 @@ public class User implements User_IF  {
 	private String password;
 	private String phone;
 	private String email;
+	private DAO_IF dao;
+
+	private Booking_IF[] bookings;
 
 
 	public User() {
@@ -23,6 +26,18 @@ public class User implements User_IF  {
 		this.email = email;
 
 	}
+
+
+	public User(int id, String fname, String lname, String password, String phone, String email, DAO_IF dao) {
+		this.id = id;
+		this.fname = fname;
+		this.lname = lname;
+		this.password = password;
+		this.phone = phone;
+		this.email = email;
+		this.dao = dao;
+	}
+
 	public int getId() {
 		return id;
 	}
