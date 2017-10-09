@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public interface SP_IF {
 
 	String getName();
@@ -19,5 +21,10 @@ public interface SP_IF {
 	void setPhone(String phone);
 
 	int getId();
+
+	void fillActivities();
+
+	void fillShifts();
+
 
 }

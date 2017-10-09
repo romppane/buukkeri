@@ -3,6 +3,7 @@ package model;
 public class Buukkeri {
 
 	public static void main(String[] args) {
+		
 		/*SessionFactory sessionfactory = null;
 
 		final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();

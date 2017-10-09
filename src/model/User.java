@@ -17,7 +17,19 @@ public class User implements User_IF  {
 
 	}
 
-	public User (int i, String fname, String lname, String password, String phone, String email) {
+
+	public User(String fname, String lname, String password, String phone, String email) {
+
+		this.fname = fname;
+		this.lname = lname;
+		this.password = password;
+		this.phone = phone;
+		this.email = email;
+
+	}
+
+
+	public User (int id, String fname, String lname, String password, String phone, String email) {
 		this.id = id;
 		this.fname = fname;
 		this.lname = lname;
