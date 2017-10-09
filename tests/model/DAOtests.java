@@ -13,6 +13,7 @@ public class DAOtests {
 	private Activity_IF act = new Activity();
 	private SP_IF sp = new SP();
 	private User_IF user = new User();
+	private Booking_IF booking = new Booking();
 
 
 	@Test
@@ -36,7 +37,7 @@ public class DAOtests {
 
 		// Service Providers fields should be correct
 		assertTrue("readSP(): reading testuser data could not be done",
-				(sp = bookerDAO.readSP(email)) != null);
+				(sp = bookerDAO.readSP(email, password)) != null);
 		assertEquals("readSP(): Email is not correct.",
 				email, sp.getEmail());
 		assertEquals("readSP(): Name is not correct.",
@@ -50,7 +51,7 @@ public class DAOtests {
 		sp.setPassword("T0Mmin PuU");
 		assertTrue("updateSP(): Changing password on test user was not successful.",
 				bookerDAO.updateSP(sp));
-		sp = bookerDAO.readSP(email);
+		sp = bookerDAO.readSP(email, sp.getPassword());
 		assertEquals("updateSP(): Password is not correct.",
 				"T0Mmin PuU", sp.getPassword());
 
@@ -59,7 +60,7 @@ public class DAOtests {
 		assertTrue("deleteSP(): Removing Service Provider was not successful.",
 				bookerDAO.deleteSP(sp));
 		assertTrue("deleteSP(): Removing Service Provider was not successful - Service Provider was still in database.",
-				bookerDAO.readSP(email) == null);
+				bookerDAO.readSP(email, sp.getPassword()) == null);
 
 		// Removing random stuff should fail
 		SP_IF assd = new SP();
@@ -71,7 +72,7 @@ public class DAOtests {
 	public void testActivityDAO() {
 
 		String name = "Sauna";
-		int spid = 1;
+		int spid = 139;
 		String loc = "Perillisensaari";
 		String desc = "Saunaa";
 		Activity_IF[] acts = null;
@@ -89,7 +90,7 @@ public class DAOtests {
 
 		// Activity fields should be correct
 		assertTrue("readActivityById(): reading testActivity data could not be done",
-				(acts = bookerDAO.readActivitiesById(spid)) != null);
+				(acts = bookerDAO.readActivitiesBySPId(spid)) != null);
 		act = acts[0];
 		assertEquals("readActivityById(): Location is not correct.",
 				loc, act.getLocation());
@@ -104,7 +105,7 @@ public class DAOtests {
 		act.setLocation("Asinsaari");
 		assertTrue("updateActivity(): Changing location on test activity was not successful.",
 				bookerDAO.updateActivity(act));
-		acts = bookerDAO.readActivitiesById(spid);
+		acts = bookerDAO.readActivitiesBySPId(spid);
 		assertFalse("updateActivity(): Location is not correct.",
 				acts[0].getLocation() == acts[1].getLocation());
 
@@ -115,7 +116,7 @@ public class DAOtests {
 		assertTrue("deleteActivity(): Removing Activity was not successful.",
 				bookerDAO.deleteActivity(acts[1]));
 		assertFalse("deleteSP(): Removing Service Provider was not successful - Service Provider was still in database.",
-				bookerDAO.readActivitiesById(spid) == null);
+				bookerDAO.readActivitiesBySPId(spid) == null);
 
 		// Removing random stuff should fail
 		Activity_IF random = new Activity();
@@ -147,7 +148,7 @@ public class DAOtests {
 
 		// Users fields should be correct
 		assertTrue("readUser(): reading testuser data could not be done",
-				(user = bookerDAO.readUser(email)) != null);
+				(user = bookerDAO.readUser(email, password)) != null);
 		assertEquals("readUser(): Email is not correct.",
 				email, user.getEmail());
 		assertEquals("readUser(): Firstname is not correct.",
@@ -163,7 +164,7 @@ public class DAOtests {
 		user.setPassword("Al0n3 in sch-o-ol");
 		assertTrue("updateUser(): Changing password on test user was not successful.",
 				bookerDAO.updateUser(user));
-		user = bookerDAO.readUser(email);
+		user = bookerDAO.readUser(email, user.getPassword());
 		assertEquals("updateUser(): Password is not correct.",
 				"Al0n3 in sch-o-ol", user.getPassword());
 
@@ -172,7 +173,7 @@ public class DAOtests {
 		assertTrue("deleteUser(): Removing User was not successful.",
 				bookerDAO.deleteUser(user));
 		assertTrue("deleteUser(): Removing User was not successful - User was still in database.",
-				bookerDAO.readUser(email) == null);
+				bookerDAO.readUser(email, user.getPassword()) == null);
 
 		// Removing random stuff should fail
 		User_IF assd = new User();
@@ -184,10 +185,10 @@ public class DAOtests {
 	public void testShifts() {
 		SP_IF ser = new SP("Tommi Testing Corporation", "abcdkissawalking", "abc@dfg.com", "0201987868");
 		bookerDAO.createSP(ser);
-		ser = bookerDAO.readSP(ser.getEmail());
+		ser = bookerDAO.readSP(ser.getEmail(), ser.getPassword());
 		Activity_IF act = new Activity("Test Activity", ser.getId(), "Test City", "Tommi is sleeping");
 		bookerDAO.createActivity(act);
-		Activity_IF[] acts = bookerDAO.readActivitiesById(ser.getId());
+		Activity_IF[] acts = bookerDAO.readActivitiesBySPId(ser.getId());
 		act = acts[0];
 		Shift_IF shift = new Shift();
 		String time = "09:00 - 10:00";

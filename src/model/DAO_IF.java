@@ -5,11 +5,12 @@ public interface DAO_IF {
 	boolean updateSP(SP_IF sp);
 	boolean deleteSP(SP_IF sp);
 	SP_IF[] readSPs();
-	SP_IF readSP(String email);
+	SP_IF readSP(String email, String pass);
 	boolean createActivity(Activity_IF act);
 	boolean updateActivity(Activity_IF act);
 	boolean deleteActivity(Activity_IF act);
-	Activity_IF[] readActivitiesById(int sp_id);
+	Activity_IF[] readActivitiesBySPId(int sp_id);
+	Activity_IF readActivityById(int id);
 	Activity_IF[] readActivities();
 	boolean createBooking(Booking_IF bk);
 	boolean updateBooking(Shift_IF shift, Booking_IF bk);
@@ -20,8 +21,9 @@ public interface DAO_IF {
 	boolean updateShift(Shift_IF shift);
 	boolean deleteShift(Shift_IF shift);
 	Shift_IF[] readActivityShifts(int act_id);
+	Shift_IF readShiftById(int ID);
 	boolean createUser(User_IF user);
 	boolean updateUser(User_IF user);
 	boolean deleteUser(User_IF user);
-	User_IF readUser(String email);
+	User_IF readUser(String email, String pass);
 }

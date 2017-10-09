@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 
 public class User implements User_IF  {
 	private int id;
@@ -11,6 +12,8 @@ public class User implements User_IF  {
 	private DAO_IF dao;
 
 	private Booking_IF[] bookings;
+	private ArrayList<Shift_IF> shifts;
+	private ArrayList<Activity_IF> activities;
 
 
 	public User() {
@@ -18,8 +21,7 @@ public class User implements User_IF  {
 	}
 
 
-	public User(String fname, String lname, String password, String phone, String email) {
-
+	public User (String fname, String lname, String password, String phone, String email) {
 		this.fname = fname;
 		this.lname = lname;
 		this.password = password;
@@ -28,17 +30,14 @@ public class User implements User_IF  {
 
 	}
 
-
-	public User (int id, String fname, String lname, String password, String phone, String email) {
+	public User(int id, String fname, String lname, String password, String phone, String email) {
 		this.id = id;
 		this.fname = fname;
 		this.lname = lname;
 		this.password = password;
 		this.phone = phone;
 		this.email = email;
-
 	}
-
 
 	public User(int id, String fname, String lname, String password, String phone, String email, DAO_IF dao) {
 		this.id = id;
@@ -86,5 +85,39 @@ public class User implements User_IF  {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public Booking_IF[] getBookings() {
+		return bookings;
+	}
 
-}
+	public ArrayList<Shift_IF> getShifts() {
+		return shifts;
+	}
+
+	public ArrayList<Activity_IF> getActivities() {
+		return activities;
+	}
+
+
+	public void fillBookingData() {
+		// gets bookings array
+		bookings = dao.readBookingsByUserId(id);
+		shifts = new ArrayList<>();
+		// gets shifts with information of bookings
+		for (int i = 0; i<bookings.length; i++) {
+			shifts.add(dao.readShiftById(bookings[i].getShiftid()));
+		}
+		// creates temporary array of activity_id:s of booked shifts
+		ArrayList<Integer> uniques = new ArrayList<>();
+		for (int i = 0; i<shifts.size(); i++) {
+			if(!uniques.contains(shifts.get(i).getActivityid()))
+				uniques.add(shifts.get(i).getActivityid());
+		}
+		// creates a list of activities user has reservations for.
+		activities = new ArrayList<>();
+		for (int i = 0; i<uniques.size(); i++) {
+			activities.add(dao.readActivityById(id));
+		}
+		}
+
+	}
+

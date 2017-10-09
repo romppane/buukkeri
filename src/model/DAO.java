@@ -172,15 +172,16 @@ public class DAO implements DAO_IF{
 	}
 	//Returns Service Provider by email
 	@Override
-	public SP_IF readSP(String email) {
+	public SP_IF readSP(String email, String pass) {
 		SP_IF provider = null;
 		PreparedStatement myStatement = null;
 		ResultSet myRs = null;
 
 		try{
-			String sqlSelect = "Select * from Service_Provider where Email = ?";
+			String sqlSelect = "Select * from Service_Provider where Email = ? AND Password = ?";
 			myStatement = myCon.prepareStatement(sqlSelect);
 			myStatement.setString(1, email);
+			myStatement.setString(2, pass);
 			myRs = myStatement.executeQuery();
 
 			if(myRs.next()) {
@@ -284,10 +285,9 @@ public class DAO implements DAO_IF{
 		String query = null;
 		int count = 0;
 		try{
-			query = "delete from Account where Email = ? AND Password = ?";
+			query = "delete from Account where Email = ?";
 			myStatement = myCon.prepareStatement(query);
 			myStatement.setString(1, user.getEmail());
-			myStatement.setString(2, user.getPassword());
 			count = myStatement.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -569,7 +569,7 @@ public class DAO implements DAO_IF{
 	}
 	//Returns all activities by spID.
 	@Override
-	public Activity_IF[] readActivitiesById(int sp_id) {
+	public Activity_IF[] readActivitiesBySPId(int sp_id) {
 		ArrayList<Activity_IF> activities = new ArrayList();
 		PreparedStatement myStatement = null;
 		ResultSet myRs = null;
@@ -610,6 +610,46 @@ public class DAO implements DAO_IF{
 		Activity_IF[] palautus = new Activity[activities.size()];
 		return (Activity_IF[])activities.toArray(palautus);
 	}
+	@Override
+	public Activity_IF readActivityById(int ID) {
+		PreparedStatement myStatement = null;
+		ResultSet myRs = null;
+		Activity_IF act = null;
+
+		try{
+			String sqlSelect = "Select * from Activity where ID = ?";
+			myStatement = myCon.prepareStatement(sqlSelect);
+			myStatement.setInt(1, ID);
+			myRs = myStatement.executeQuery();
+
+			while(myRs.next()) {
+				int id = myRs.getInt("ID");
+				String name = myRs.getString("Name");
+				int SP_ID = myRs.getInt("SP_ID");
+				String location = myRs.getString("Location");
+				String description = myRs.getString("Description");
+
+				act = new Activity(id,name,SP_ID,location,description);
+			}
+
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if (myRs != null)
+					myRs.close();
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return act;
+	}
+
 	//Returns all activities
 	@Override
 	public Activity_IF[] readActivities() {
@@ -695,12 +735,44 @@ public class DAO implements DAO_IF{
 	}
 	//Returns all bookings for a specific activity.
 	//Kun tarkistetaan vuorojen availibilityä täytyy vertailla, shift id:tä ja katsoa onko varauksia tehty.
-	//TYNKÄ
-
 	@Override
-	public Booking[] readBookingsByShiftId(int shift_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Booking_IF[] readBookingsByShiftId(int shift_id) {
+		ArrayList<Booking_IF> bookings = new ArrayList();
+		PreparedStatement myStatement = null;
+		ResultSet myRs = null;
+
+		try{
+			String sqlSelect = "Select * from Booking where Shift_ID = ?";
+			myStatement = myCon.prepareStatement(sqlSelect);
+			myStatement.setInt(1, shift_id);
+			myRs = myStatement.executeQuery();
+
+			while(myRs.next()) {
+				int shiftid = myRs.getInt("Shift_ID");
+				int userid = myRs.getInt("User_ID");
+
+				Booking booking = new Booking(shiftid, userid);
+				bookings.add(booking);
+			}
+
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if (myRs != null)
+					myRs.close();
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+
+		Booking_IF[] ret = new Booking[bookings.size()];
+		return (Booking_IF[])bookings.toArray(ret);
 	}
 	//Returns all shifts for activity.
 
@@ -746,16 +818,18 @@ public class DAO implements DAO_IF{
 		return (Shift_IF[])shifts.toArray(ret);
 	}
 
+	// Returns user for certain unique email address.
 	@Override
-	public User_IF readUser(String email) {
+	public User_IF readUser(String email, String pass) {
 		User_IF user = null;
 		PreparedStatement myStatement = null;
 		ResultSet myRs = null;
 
 		try{
-			String sqlSelect = "Select * from Account where Email = ?";
+			String sqlSelect = "Select * from Account where Email = ? AND Password = ?";
 			myStatement = myCon.prepareStatement(sqlSelect);
 			myStatement.setString(1, email);
+			myStatement.setString(2, pass);
 			myRs = myStatement.executeQuery();
 
 			if(myRs.next()) {
@@ -786,6 +860,46 @@ public class DAO implements DAO_IF{
 		}
 
 		return user;
+	}
+
+	@Override
+	public Shift_IF readShiftById(int ID) {
+		Shift_IF shift = null;
+		PreparedStatement myStatement = null;
+		ResultSet myRs = null;
+
+		try{
+			String sqlSelect = "Select * from Shift where ID = ?";
+			myStatement = myCon.prepareStatement(sqlSelect);
+			myStatement.setInt(1, ID);
+			myRs = myStatement.executeQuery();
+
+			while(myRs.next()) {
+				int id = myRs.getInt("ID");
+				int activityid = myRs.getInt("Activity_ID");
+				float price = myRs.getFloat("Price");
+				String stime = myRs.getString("Shift_Time");
+
+				shift = new Shift(id, stime, price, activityid);
+			}
+
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if (myRs != null)
+					myRs.close();
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+
+		return shift;
 	}
 
 }

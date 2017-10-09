@@ -12,8 +12,8 @@ public class SP implements SP_IF{
 	private DAO_IF dao;
 
 	private Activity_IF[] activities;
-	private ArrayList<Shift_IF[]> providershifts;
 
+	private ArrayList<Shift_IF[]> providershifts;
 
 	public SP() {
 	}
@@ -73,8 +73,16 @@ public class SP implements SP_IF{
 		return id;
 	}
 
+	public Activity_IF[] getActivities() {
+		return activities;
+	}
+
+	public ArrayList<Shift_IF[]> getProvidershifts() {
+		return providershifts;
+	}
+
 	public void fillActivities() {
-		activities = dao.readActivitiesById(id);
+		activities = dao.readActivitiesBySPId(id);
 	}
 
 	public void fillShifts() {
