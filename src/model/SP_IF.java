@@ -20,11 +20,15 @@ public interface SP_IF {
 
 	void setPhone(String phone);
 
+	void setDao(DAO_IF dao);
+
 	int getId();
 
 	void fillActivities();
 
 	void fillShifts();
+
+	void createSetOfShifts(int starth, int startmin, int endh, int endmin, int length, Activity_IF activity_IF);
 
 
 }

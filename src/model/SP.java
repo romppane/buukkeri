@@ -81,6 +81,11 @@ public class SP implements SP_IF{
 		return providershifts;
 	}
 
+
+	public void setDao(DAO_IF dao) {
+		this.dao = dao;
+	}
+
 	public void fillActivities() {
 		activities = dao.readActivitiesBySPId(id);
 	}
@@ -89,6 +94,26 @@ public class SP implements SP_IF{
 		providershifts = new ArrayList<>();
 		for(int i = 0; i < activities.length; i++) {
 			providershifts.add(dao.readActivityShifts(activities[i].getId()));
+		}
+	}
+
+	public void createSetOfShifts(int starth, int startmin, int endh, int endmin, int length, Activity_IF act) {
+		boolean done = true;
+		System.out.println("Looppi alkaa");
+		while(done) {
+			System.out.println("4Head");
+			int tempmin = startmin;
+			int temph = starth;
+			startmin = startmin + length;
+			if(startmin >= 60){
+				startmin = startmin - 60;
+				starth = starth + 1;
+			}
+			Shift_IF shift = new Shift(temph+":"+tempmin+"-"+starth+":"+startmin, 20.00, act.getId());
+			dao.createShift(shift);
+			if(starth == endh && startmin == endmin)
+				done = false;
+
 		}
 	}
 
