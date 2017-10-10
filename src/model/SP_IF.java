@@ -28,7 +28,7 @@ public interface SP_IF {
 
 	void fillShifts();
 
-	void createSetOfShifts(int starth, int startmin, int endh, int endmin, int length, Activity_IF activity_IF);
+	void createSetOfShifts(int starth, int startmin, int endh, int endmin, int length, double price, Activity_IF activity_IF);
 
 
 }

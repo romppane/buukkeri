@@ -97,7 +97,7 @@ public class SP implements SP_IF{
 		}
 	}
 
-	public void createSetOfShifts(int starth, int startmin, int endh, int endmin, int length, Activity_IF act) {
+	public void createSetOfShifts(int starth, int startmin, int endh, int endmin, int length, double price, Activity_IF act) {
 		boolean done = true;
 		System.out.println("Looppi alkaa");
 		while(done) {
@@ -109,7 +109,7 @@ public class SP implements SP_IF{
 				startmin = startmin - 60;
 				starth = starth + 1;
 			}
-			Shift_IF shift = new Shift(temph+":"+tempmin+"-"+starth+":"+startmin, 20.00, act.getId());
+			Shift_IF shift = new Shift(temph+":"+tempmin+"-"+starth+":"+startmin, price, act.getId());
 			dao.createShift(shift);
 			if(starth == endh && startmin == endmin)
 				done = false;

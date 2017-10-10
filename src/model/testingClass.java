@@ -45,7 +45,7 @@ public class testingClass {
 		System.out.println("Syötä vuoron viimeiset minuutit.");
 		int endmin = scanner.nextInt();
 
-		sp.createSetOfShifts(starth,startmin,endh,endmin,length,acts[0]);
+		sp.createSetOfShifts(starth,startmin,endh,endmin,length, 20.00,acts[0]);
 
 
 
