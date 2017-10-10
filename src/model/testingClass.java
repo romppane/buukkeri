@@ -47,6 +47,11 @@ public class testingClass {
 
 		sp.createSetOfShifts(starth,startmin,endh,endmin,length, 20.00,acts[0]);
 
+		user.setDao(dao);
+
+
+
+
 
 
 
