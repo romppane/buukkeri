@@ -81,7 +81,7 @@
       </FlowPane>
       <Pane prefHeight="253.0" prefWidth="400.0">
          <children>
-            <ImageView fitHeight="244.0" fitWidth="300.0" layoutX="50.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="244.0" fitWidth="300.0" layoutX="43.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
       <Pane prefHeight="68.0" prefWidth="400.0" />

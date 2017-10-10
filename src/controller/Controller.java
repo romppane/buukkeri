@@ -1,5 +1,7 @@
 package controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import model.*;
 import view.*;
 
@@ -9,44 +11,46 @@ public class Controller implements Controller_IF {
 	Booking booking;
 	DAO dao;
 	Buukkeri_view main;
+	private ActionListener actListener;
 
-	public Controller(Buukkeri_view main) {
-		this.main = main;
-
+	public Controller(Buukkeri_view view, DAO model) {
+		this.main = view;
+		this.dao = model;
 	}
-//SP OPERATIONS
-//creates sp
+
+	// SP OPERATIONS
+	// creates sp
 	public SP_IF createSP(String name, String password, String email, String phone) {
 		sp = new SP(name, password, email, phone);
 		dao.createSP(sp);
-		return dao.readSP(email);
+		return dao.readSP(email, password);
 
 	}
-//shows all sp:s
-	public SP_IF[] showSPs(){
+
+	// shows all sp:s
+	public SP_IF[] showSPs() {
 		return dao.readSPs();
 	}
-//shows all sp
-	public SP_IF showSP(String email){
-		return dao.readSP(email);
+
+	// shows all sp
+	public SP_IF showSP(String email, String password) {
+		return dao.readSP(email, password);
 	}
-	public boolean deleteSP(SP_IF sp){
+
+	public boolean deleteSP(SP_IF sp) {
 
 		return dao.deleteSP(sp);
 	}
 
-	public Activity_IF[] showActivities(){
-		return dao.readActivities() ;
+	public Activity_IF[] showActivities() {
+		return dao.readActivities();
 
 	}
-	public Activity_IF showActivity(int sp_id){
-		dao.readActivitiesById(sp_id);
+
+	public Activity_IF showActivity(int sp_id) {
+		dao.readActivitiesBySPId(sp_id);
 		return null;
 
 	}
-
-
-
-
 
 }
