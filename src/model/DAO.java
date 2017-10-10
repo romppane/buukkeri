@@ -1,12 +1,18 @@
 package model;
 import java.sql.*;
 import java.util.ArrayList;
-
+/**Data access object
+ *
+ * @author Roni, Tommi, Marika, Ville
+ *
+ */
 
 public class DAO implements DAO_IF{
 
 	private Connection myCon;
-
+/**
+ * Luokan constructori
+ */
 	public DAO() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -19,7 +25,9 @@ public class DAO implements DAO_IF{
 			System.exit(-1);
 		}
 	}
-
+/**
+ * yhteyden sammutus metodi
+ */
 	@Override
 	protected void finalize() {
 		try {
@@ -33,6 +41,10 @@ public class DAO implements DAO_IF{
 
 
 	//Creates Service Provider to db.
+	/**
+	 * @param sp palvelun tuottajan luonti tietokantaan
+	 * @return false jos ei onnistu true jos onnistuu
+	 */
 	@Override
 	public boolean createSP(SP_IF sp) {
 		PreparedStatement myStatement = null;
@@ -67,6 +79,10 @@ public class DAO implements DAO_IF{
 		}
 	}
 	//Changes Service Provider password.
+	/**
+	 * @param sp palvelun tuottajan tiedot päivitys tietokannassa
+	 * @return false jos epäonnistuu true jos onnistuu
+	 */
 	@Override
 	public boolean updateSP(SP_IF sp) {
 		PreparedStatement myStatement = null;
@@ -99,6 +115,10 @@ public class DAO implements DAO_IF{
 		}
 	}
 	//Deletes Service Provider from db.
+	/**
+	 * @param sp tietokannasta poistettavan palvelun tuottajan tiedot
+	 * @return false jos ei onnistu true jos onnistuu
+	 */
 	@Override
 	public boolean deleteSP(SP_IF sp) {
 		PreparedStatement myStatement = null;
@@ -129,6 +149,10 @@ public class DAO implements DAO_IF{
 		}
 	}
 	//Returns all Service Providers
+	/**
+	 * Hakee kaikki palvelun tuottajat tiedokannasta
+	 * @return palauttaa palvelu tuottaja listan
+	 */
 	@Override
 	public SP_IF[] readSPs() {
 		ArrayList<SP> providers = new ArrayList();
@@ -171,6 +195,11 @@ public class DAO implements DAO_IF{
 		return (SP_IF[])providers.toArray(palautus);
 	}
 	//Returns Service Provider by email
+	/**hakee yhden palvelun tuottajan tiedot sähköpostin ja salasanan perusteella
+	 * @param email palvelun tuottajan sähköposti tieto
+	 * @param pass palvelun tuottajan salasana tieto
+	 * @return sp palauttaa palvelun tuottajan
+	 */
 	@Override
 	public SP_IF readSP(String email, String pass) {
 		SP_IF provider = null;
@@ -213,6 +242,10 @@ public class DAO implements DAO_IF{
 		return provider;
 	}
 	//Creates User to db.
+	/** Luo käyttäjän tietokantaan
+	 * @param user luotavan käyttäjän tiedot
+	 * @return false jos luonti epäonnistuu true jos luonti on onnistunut
+	 */
 	@Override
 	public boolean createUser(User_IF user) {
 		PreparedStatement myStatement = null;
@@ -247,6 +280,10 @@ public class DAO implements DAO_IF{
 		}
 	}
 	//Changes password for User.
+	/** Käyttäjän tietojen päivitys
+	 * @param user käyttäjän tiedot
+	 * @return false jos päivitys ei onnistu true jos päivitys onnistuu
+	 */
 	@Override
 	public boolean updateUser(User_IF user) {
 		PreparedStatement myStatement = null;
@@ -279,6 +316,10 @@ public class DAO implements DAO_IF{
 		}
 	}
 	//Deletes User for Password Email pair.
+	/**poistaa käyttäjän tietokannasta
+	 * @param user poistettavan käyttäjän tiedot
+	 * @return false jos ei onnistu true jos onnistuu
+	 */
 	@Override
 	public boolean deleteUser(User_IF user) {
 		PreparedStatement myStatement = null;
@@ -309,6 +350,10 @@ public class DAO implements DAO_IF{
 		}
 	}
 	//Creates Booking to db
+	/** varaus tietojen lisäys tietokantaan
+	 * @param bk varauksen tiedot
+	 * @return false jos ei onnistu true jos onnistuu
+	 */
 	@Override
 	public boolean createBooking(Booking_IF bk) {
 		PreparedStatement myStatement = null;
@@ -340,6 +385,11 @@ public class DAO implements DAO_IF{
 
 	}
 	//Switches shift to another shift
+	/**varauksen päivitys
+	 * @param shift vuoron tiedot
+	 * @param bk varauksen tiedot
+	 * @return false jos ei onnistu true jos onnistuu
+	 */
 	@Override
 	public boolean updateBooking(Shift_IF shift, Booking_IF bk) {
 		PreparedStatement myStatement = null;
@@ -374,12 +424,20 @@ public class DAO implements DAO_IF{
 	}
 	//Deletes Booking from db
 	//NOT DONE
+	/**vuoron poisto tietokannasta
+	 * @param bk varauksen tiedot
+	 * @return false jos epäonnistuu true jos onnistuu
+	 */
 	@Override
 	public boolean deleteBooking(Booking_IF bk) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 	//Creates a shift to db.
+	/**vuoron luonti tietokantaan
+	 * @param shift vuoron tiedot
+	 * @return false jos epäonnistuu, true jos onnistuu
+	 */
 	@Override
 	public boolean createShift(Shift_IF shift) {
 		PreparedStatement myStatement = null;
@@ -411,6 +469,10 @@ public class DAO implements DAO_IF{
 		}
 	}
 	//Sets a price for a shift
+	/**vuoron päivitys tietokantaan
+	 * @param shift vuoron tiedot
+	 * @return false jos epäonnistuu true jos onnistuu
+	 */
 	@Override
 	public boolean updateShift(Shift_IF shift) {
 		PreparedStatement myStatement = null;
@@ -443,6 +505,10 @@ public class DAO implements DAO_IF{
 		}
 	}
 	//Deletes a shift.
+	/**vuoron poisto tietokannasta
+	 * @param shift vuoron tiedot
+	 * @return false jos epäonnistuu true jos onnistuu
+	 */
 	@Override
 	public boolean deleteShift(Shift_IF shift) {
 		PreparedStatement myStatement = null;
@@ -473,6 +539,10 @@ public class DAO implements DAO_IF{
 		}
 	}
 	//Creates Activity
+	/**aktiviteetin luonti tietokantaan
+	 * @param act aktiviteetin tiedot
+	 * @return false jos epäonnistuu true jos onnistuu
+	 */
 	@Override
 	public boolean createActivity(Activity_IF act) {
 		PreparedStatement myStatement = null;
@@ -506,6 +576,10 @@ public class DAO implements DAO_IF{
 		}
 	}
 	//Sets location for activity
+	/**aktiviteetin päivitys tietokantaan
+	 * @param act aktiviteetin tiedot
+	 * @return false jos epäonnistuu true jos onnistuu
+	 */
 	@Override
 	public boolean updateActivity(Activity_IF act) {
 		PreparedStatement myStatement = null;
@@ -538,6 +612,10 @@ public class DAO implements DAO_IF{
 		}
 	}
 	//Deletes activity by ID
+	/**aktiviteetin poisto tietokannasta
+	 * @param act aktiviteetin tiedot
+	 * @return false jos epäonnistuu true jos onnistuu
+	 */
 	@Override
 	public boolean deleteActivity(Activity_IF act) {
 		PreparedStatement myStatement = null;
@@ -568,6 +646,10 @@ public class DAO implements DAO_IF{
 		}
 	}
 	//Returns all activities by spID.
+	/**aktiviteetin haku tietokannasta palvelun tuottajana
+	 * @param sp_id palveluntuottajan id numero
+	 * @return palauttaa aktiviteetti listan
+	 */
 	@Override
 	public Activity_IF[] readActivitiesBySPId(int sp_id) {
 		ArrayList<Activity_IF> activities = new ArrayList();
@@ -610,6 +692,10 @@ public class DAO implements DAO_IF{
 		Activity_IF[] palautus = new Activity[activities.size()];
 		return (Activity_IF[])activities.toArray(palautus);
 	}
+	/**aktiviteetin haku id numerolla
+	 * @param ID aktiviteetin id numero
+	 * @return act palauttaa aktiviteetin
+	 */
 	@Override
 	public Activity_IF readActivityById(int ID) {
 		PreparedStatement myStatement = null;
@@ -651,6 +737,9 @@ public class DAO implements DAO_IF{
 	}
 
 	//Returns all activities
+	/**hakee kaikki aktiviteetit tietokannasta
+	 * @return palauttaa aktiviteetti listan
+	 */
 	@Override
 	public Activity_IF[] readActivities() {
 		ArrayList<Activity_IF> activities = new ArrayList();
@@ -694,6 +783,10 @@ public class DAO implements DAO_IF{
 	}
 
 	//Returns all bookings for a specific user.
+	/**varausten haku tietokannasta tietyllä käyttäjälle
+	 * @param user_id halutun käyttäjän id numero
+	 * @return palauttaa varaus listan
+	 */
 	@Override
 	public Booking_IF[] readBookingsByUserId(int user_id) {
 		ArrayList<Booking_IF> bookings = new ArrayList();
@@ -735,6 +828,10 @@ public class DAO implements DAO_IF{
 	}
 	//Returns all bookings for a specific activity.
 	//Kun tarkistetaan vuorojen availibilityä täytyy vertailla, shift id:tä ja katsoa onko varauksia tehty.
+	/**hakee varaukset tietokannasta vuoro numerolla
+	 * @param shift_id vuoron id numero
+	 * @return palauttaa varaus taulun
+	 */
 	@Override
 	public Booking_IF[] readBookingsByShiftId(int shift_id) {
 		ArrayList<Booking_IF> bookings = new ArrayList();
@@ -775,7 +872,11 @@ public class DAO implements DAO_IF{
 		return (Booking_IF[])bookings.toArray(ret);
 	}
 	//Returns all shifts for activity.
-
+	/**
+	 * hakee kaikki vuorot aktiviteettille
+	 * @param act_id aktiviteetin id numero
+	 * @return palauttaa vuoro taulukon
+	 */
 	@Override
 	public Shift_IF[] readActivityShifts(int act_id) {
 		ArrayList<Shift_IF> shifts = new ArrayList();
@@ -819,6 +920,11 @@ public class DAO implements DAO_IF{
 	}
 
 	// Returns user for certain unique email address.
+	/**hakee tietyn käyttäjätilin
+	 * @param email käyttäjän sähköposti
+	 * @param pass käyttäjän salasana
+	 * @return palauttaa käyttäjä olion
+	 */
 	@Override
 	public User_IF readUser(String email, String pass) {
 		User_IF user = null;
@@ -861,7 +967,11 @@ public class DAO implements DAO_IF{
 
 		return user;
 	}
-
+	/**
+	 * hakee vuoron id:n perusteella
+	 * @param ID vuorn id numero
+	 * @return palauttaa vuoro olion
+	 */
 	@Override
 	public Shift_IF readShiftById(int ID) {
 		Shift_IF shift = null;
