@@ -97,6 +97,11 @@ public class User implements User_IF  {
 		return activities;
 	}
 
+	public void bookShift(Shift shift) {
+		Booking bk = new Booking(id, shift.getId());
+		dao.createBooking(bk);
+	}
+
 
 	public void fillBookingData() {
 		// gets bookings array
