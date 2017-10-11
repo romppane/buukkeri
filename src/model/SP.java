@@ -103,8 +103,7 @@ public class SP implements SP_IF{
 	 * @param email
 	 */
 	public void setEmail(String email) {
-		// TODO Auto-generated method stub
-
+		this.email = email;
 	}
 	/** puhelin numeron getteri
 	 * @return phone

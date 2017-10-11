@@ -174,7 +174,9 @@ public class User implements User_IF  {
 		return activities;
 	}
 
-
+/**
+ * täyttää käyttäjän booking taulukon
+ */
 	public void bookShift(Shift_IF shift) {
 		Booking_IF bk = new Booking(id, shift.getId());
 		dao.createBooking(bk);

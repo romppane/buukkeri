@@ -803,7 +803,7 @@ public class DAO implements DAO_IF{
 				int shiftid = myRs.getInt("Shift_ID");
 				int userid = myRs.getInt("User_ID");
 
-				Booking booking = new Booking(shiftid, userid);
+				Booking booking = new Booking(userid, shiftid);
 				bookings.add(booking);
 			}
 

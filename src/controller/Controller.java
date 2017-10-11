@@ -19,7 +19,7 @@ public class Controller implements Controller_IF {
 	public SP_IF createSP(String name, String password, String email, String phone) {
 		sp = new SP(name, password, email, phone);
 		dao.createSP(sp);
-		return dao.readSP(email, phone);
+		return dao.readSP(email, password);
 
 	}
 //shows all sp:s
@@ -40,9 +40,8 @@ public class Controller implements Controller_IF {
 
 	}
 	public Activity_IF showActivity(int sp_id){
-		dao.readActivitiesBySPId(sp_id);
+		//dao.readActivitiesById(sp_id);
 		return null;
-
 	}
 
 
