@@ -16,13 +16,10 @@ public class SP implements SP_IF{
 
 	private Activity_IF[] activities;
 
-<<<<<<< HEAD
-=======
 	private ArrayList<Shift_IF[]> providershifts;
 /**
  * tyhjä constructori
  */
->>>>>>> refs/remotes/origin/develop
 	public SP() {
 	}
 /**

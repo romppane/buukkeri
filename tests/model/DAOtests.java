@@ -106,11 +106,6 @@ public class DAOtests {
 
 
 	@Test
-	public void testNothing() {
-		assertTrue("Huijausta", true);
-	}
-
-	@Test
 	public void testSPDAO() {
 
 		// Try to add duplicate Service Provider, should not be possible

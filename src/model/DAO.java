@@ -1,18 +1,11 @@
 package model;
 import java.sql.*;
 import java.util.ArrayList;
-<<<<<<< HEAD
-
-import model.DAO_IF;
-import model.SP;
-
-=======
 /**Data access object
  *
  * @author Roni, Tommi, Marika, Ville
  *
  */
->>>>>>> refs/remotes/origin/develop
 
 public class DAO implements DAO_IF{
 
@@ -437,8 +430,33 @@ public class DAO implements DAO_IF{
 	 */
 	@Override
 	public boolean deleteBooking(Booking_IF bk) {
-		// TODO Auto-generated method stub
-		return false;
+		PreparedStatement myStatement = null;
+		String query = null;
+		int count = 0;
+		try{
+			query = "delete from Booking where Shift_ID = ? AND User_ID = ?";
+			myStatement = myCon.prepareStatement(query);
+			myStatement.setInt(1, bk.getShiftid());
+			myStatement.setInt(2, bk.getUserid());
+			count = myStatement.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if (myStatement != null)
+					myStatement.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		if(count!=1){
+			return false;
+		}
+		else{
+			return true;
+		}
 	}
 	//Creates a shift to db.
 	/**vuoron luonti tietokantaan
