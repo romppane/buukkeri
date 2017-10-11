@@ -2,7 +2,6 @@ package model;
 
 public interface User_IF {
 	public int getId();
-	public void setId(int id);
 	public String getFname();
 	public void setFname(String fname);
 	public String getLname() ;
@@ -14,6 +13,9 @@ public interface User_IF {
 	public String getEmail();
 	public void setEmail(String email) ;
 	public void setDao(DAO_IF dao);
+	public void bookShift(Shift_IF shift);
+	public Booking_IF[] getBookings();
+	public void fillBookingData();
 
 
 }

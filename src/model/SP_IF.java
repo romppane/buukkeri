@@ -30,5 +30,6 @@ public interface SP_IF {
 
 	void createSetOfShifts(int starth, int startmin, int endh, int endmin, int length, double price, Activity_IF activity_IF);
 
+	public Activity_IF[] getActivities();
 
 }
