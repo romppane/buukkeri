@@ -423,39 +423,15 @@ public class DAO implements DAO_IF{
 		}
 	}
 	//Deletes Booking from db
+	//NOT DONE
 	/**vuoron poisto tietokannasta
 	 * @param bk varauksen tiedot
 	 * @return false jos epäonnistuu true jos onnistuu
 	 */
 	@Override
 	public boolean deleteBooking(Booking_IF bk) {
-		PreparedStatement myStatement = null;
-		String query = null;
-		int count = 0;
-		try{
-			query = "delete from Booking where Shift_ID = ? AND User_ID = ?";
-			myStatement = myCon.prepareStatement(query);
-			myStatement.setInt(1, bk.getShiftid());
-			myStatement.setInt(2, bk.getUserid());
-			count = myStatement.executeUpdate();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		finally{
-			try {
-				if (myStatement != null)
-					myStatement.close();
-			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
-		}
-		if(count!=1){
-			return false;
-		}
-		else{
-			return true;
-		}
+		// TODO Auto-generated method stub
+		return false;
 	}
 	//Creates a shift to db.
 	/**vuoron luonti tietokantaan
