@@ -78,8 +78,16 @@ public class User implements User_IF  {
 		this.email = email;
 		this.dao = dao;
 	}
+
 /**käyttäjän id numeron getteri
  * @param id
+ */
+	public void setDao(DAO_IF dao) {
+		this.dao = dao;
+	}
+
+/**Käyttäjän id getteri
+ * @return id
  */
 	public int getId() {
 		return id;
@@ -172,8 +180,18 @@ public class User implements User_IF  {
 		return activities;
 	}
 
+
 /**
  * täyttää käyttäjän booking taulukon
+ */
+	public void bookShift(Shift shift) {
+		Booking bk = new Booking(id, shift.getId());
+		dao.createBooking(bk);
+	}
+
+
+/**
+ * käyttäjän booking taulukon täyttö
  */
 	public void fillBookingData() {
 		// gets bookings array
