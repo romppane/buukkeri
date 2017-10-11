@@ -49,6 +49,12 @@ public class User implements User_IF  {
 		this.dao = dao;
 	}
 
+
+	public void setDao(DAO_IF dao) {
+		this.dao = dao;
+	}
+
+
 	public int getId() {
 		return id;
 	}

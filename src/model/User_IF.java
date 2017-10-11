@@ -13,6 +13,7 @@ public interface User_IF {
 	public void setPhone(String phone) ;
 	public String getEmail();
 	public void setEmail(String email) ;
+	public void setDao(DAO_IF dao);
 
-	
+
 }

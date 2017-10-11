@@ -49,6 +49,11 @@ public class testingClass {
 		sp.createSetOfShifts(starth,startmin,endh,endmin,length, 20.00,acts[0]);
 
 		Shift_IF[] shifts = dao.readActivityShifts(acts[0].getId() );
+		user.setDao(dao);
+
+
+
+
 
 
 		Booking bookintest = new Booking(user.getId(), shifts[0].getId());
