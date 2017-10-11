@@ -92,12 +92,6 @@ public class User implements User_IF  {
 	public int getId() {
 		return id;
 	}
-	/**käyttäjän id numeron setteri
-	 * @return id
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
 	/**ekan nimen getteri
 	 * @return fname
 	 */
@@ -180,12 +174,11 @@ public class User implements User_IF  {
 		return activities;
 	}
 
-
 /**
  * täyttää käyttäjän booking taulukon
  */
-	public void bookShift(Shift shift) {
-		Booking bk = new Booking(id, shift.getId());
+	public void bookShift(Shift_IF shift) {
+		Booking_IF bk = new Booking(id, shift.getId());
 		dao.createBooking(bk);
 	}
 

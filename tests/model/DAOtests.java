@@ -37,7 +37,9 @@ public class DAOtests {
 		act.setLocation("Test City");
 		act.setSpid(sp.getId());
 		bookerDAO.createActivity(act);
-		Activity_IF[] acts = bookerDAO.readActivitiesBySPId(sp.getId());
+		sp.fillActivities();
+		Activity_IF[] acts = sp.getActivities();
+
 		//Only way to get activities is in array.
 		act = acts[0];
 		System.out.println(act.getId());
@@ -62,6 +64,7 @@ public class DAOtests {
 
 		bookerDAO.createUser(user);
 		user = bookerDAO.readUser(email, password);
+		user.setDao(bookerDAO);
 
 		//Tee book shift.
 
@@ -70,6 +73,12 @@ public class DAOtests {
 
 	@AfterClass
 	public static void end() {
+		Booking_IF[] bookings = bookerDAO.readBookingsByUserId(user.getId());
+		if(bookings.length > 0) {
+			for(int i = 0; i<bookings.length; i++) {
+				bookerDAO.deleteBooking(bookings[i]);
+			}
+		}
 		// Try to delete all the shifts made if not yet deleted.
 		shifts = bookerDAO.readActivityShifts(act.getId());
 		if(shifts.length > 0) {
@@ -228,6 +237,27 @@ public class DAOtests {
 				Shift_IF[] rest = bookerDAO.readActivityShifts(act.getId());
 				assertTrue("deleteUser(): Removing Shifts was not successful - atleast one Shift was still in database.",
 						rest.length == 0);
+
+
+	}
+
+	@Test
+	public void testBooking() {
+		// Create Booking with user
+		user.setDao(bookerDAO);
+		System.out.println(shift.getShift_time());
+		user.bookShift(shift);
+		Booking_IF[] bookings = null;
+		//user.fillBookingData();
+		Booking_IF[] userbooks = user.getBookings();
+
+		// Read the bookings made by user
+		assertTrue("readBookingsByUserId(): Reading bookings made by user was not successfull",
+				(bookings = bookerDAO.readBookingsByUserId(user.getId())) != null);
+		System.out.println(bookings[0].getUserid());
+		bookerDAO.deleteBooking(bookings[0]);
+		//assertEquals("fillBookingData(): Reading bookings straight from dao gave differes from readBookingsByUserId()", bookings[0].getShiftid(), userbooks[0].getShiftid());
+
 
 
 	}
