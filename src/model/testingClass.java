@@ -5,7 +5,8 @@ import java.util.Scanner;
 public class testingClass {
 
 	public static void main(String[] args) {
-
+		//hae lista kaikista aktiviteeteista
+		//hae tee varauksia sifteistä
 		Scanner scanner = new Scanner(System.in);
 
 		DAO_IF dao = new DAO();
@@ -47,8 +48,14 @@ public class testingClass {
 
 		sp.createSetOfShifts(starth,startmin,endh,endmin,length, 20.00,acts[0]);
 
+		Shift_IF[] shifts = dao.readActivityShifts(acts[0].getId() );
 
 
+		Booking bookintest = new Booking(user.getId(), shifts[0].getId());
+
+		dao.createBooking(bookintest);
+
+		System.out.println(bookintest.toString());
 
 
 

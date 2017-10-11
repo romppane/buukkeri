@@ -317,8 +317,8 @@ public class DAO implements DAO_IF{
 		try{
 			query = "insert into Booking values(?,?);";
 			myStatement = myCon.prepareStatement(query);
-			myStatement.setInt(1, bk.getUserid());
-			myStatement.setInt(2, bk.getShiftid());
+			myStatement.setInt(2, bk.getUserid());
+			myStatement.setInt(1, bk.getShiftid());
 			count = myStatement.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
