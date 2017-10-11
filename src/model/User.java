@@ -174,6 +174,10 @@ public class User implements User_IF  {
 		return activities;
 	}
 
+<<<<<<< Upstream, based on branch 'develop' of https://github.com/romppane/buukkeri.git
+=======
+
+>>>>>>> 9e4d107 asd
 /**
  * täyttää käyttäjän booking taulukon
  */
