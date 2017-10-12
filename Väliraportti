@@ -1,5 +1,13 @@
+20171012
+
 Our project is about bringing sports easily accessible for casual people, by making a platform that makes booking shifts and finding events near
 you easy. With buukkeri a service provider can log into the system and create events and shifts with location information, price and description
 that can be viewed by users of the site. On users end events are suggested to them based on their location, events can also be browsed based on 
 activity the user is interested in. By bringing people and service providers together in one platform, making notifications and announcements of
-the activity can be done in a revolutionally way that has not been done before.
+the activity can be done in a revolutionary way that has not been done before.
+
+At this point we’ve only completed functionalities in the backend of the program. In the next period we’re building the frontend to complete use case stories.
+
+Backend is build with MVC model. Tests are build for DAO -class.In the model we have classes and interfaces for: Activity, Booking, DAO, Shift, Service Provider and the user.
+
+
