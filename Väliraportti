@@ -10,4 +10,3 @@ At this point we’ve only completed functionalities in the backend of the progr
 
 Backend is build with MVC model. Tests are build for DAO -class.In the model we have classes and interfaces for: Activity, Booking, DAO, Shift, Service Provider and the user.
 
-
