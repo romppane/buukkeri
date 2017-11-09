@@ -6,7 +6,7 @@ public class testingClass {
 
 	public static void main(String[] args) {
 		//hae lista kaikista aktiviteeteista
-		//hae tee varauksia sifteistä
+		//hae tee varauksia sifteista
 		Scanner scanner = new Scanner(System.in);
 
 		DAO_IF dao = new DAO();
