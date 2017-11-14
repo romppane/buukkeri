@@ -3,3 +3,11 @@
 .metadata
 .classpath
 /junit/
+*.iml
+.idea
+target
+bower_components
+node_modules
+node
+*.log
+built
